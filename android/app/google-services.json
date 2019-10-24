@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "478030261642",
+    "firebase_url": "https://anytimedoc-ee8c3.firebaseio.com",
+    "project_id": "anytimedoc-ee8c3",
+    "storage_bucket": "anytimedoc-ee8c3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:478030261642:android:fc14cee81138088bef6c73",
+        "android_client_info": {
+          "package_name": "com.anytimedoc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "478030261642-cevcd0nfei5q13ukr3o1st84n6n42j5q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA60fQKXRbCkSNLh1K9keQIGskxMAiEuMw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "478030261642-cevcd0nfei5q13ukr3o1st84n6n42j5q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
