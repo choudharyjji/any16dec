@@ -142,7 +142,7 @@ export default class SpecialityFilter extends Component {
 
 //            alert(JSON.stringify(res))
 
-            this.setState({results:res[0].array})
+            this.setState({results:res.array})
         }
     }
 
@@ -169,7 +169,7 @@ export default class SpecialityFilter extends Component {
 
 
 
-        store.push("speciality", dict);
+        store.update("speciality", dict);
         this.props.navigation.goBack()
     }
 

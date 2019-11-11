@@ -58,7 +58,7 @@ export default class Search extends Component {
         if (res == null || res.length == 0) {
             this.fetchHospital(res,type,depart,'')
         } else {
-            var array = res[0].array
+            var array = res.array
             for (var i = 0; i < array.length; i++) {
                 if (array[i].selected == "Y") {
                     speciality = speciality + array[i].id + ','
@@ -85,7 +85,7 @@ export default class Search extends Component {
             this.setState({hospital:[]})
 
         } else {
-            var array = res[0].array
+            var array = res.array
             for (var i = 0; i < array.length; i++) {
                 if (array[i].selected == "Y") {
                     hospital = hospital + array[i].id + ','
@@ -151,7 +151,7 @@ export default class Search extends Component {
         if (res == null || res.length == 0) {
             this.fetchSpeciality(res,type,'')
         } else {
-            var array = res[0].array
+            var array = res.array
             for (var i = 0; i < array.length; i++) {
                 if (array[i].selected == "Y") {
                     depart = depart + array[i].id + ','
@@ -567,7 +567,7 @@ export default class Search extends Component {
     }
 
     SearchFilterFunction(text){
-
+        console.log(GLOBAL.user_id+'----'+ GLOBAL.lat+'----'+GLOBAL.long+'----'+text)
 
         const url =  GLOBAL.BASE_URL  + 'serach_doctor'
 

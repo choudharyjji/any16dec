@@ -62,7 +62,7 @@ export default class Refernearn extends Component {
 
 _fancyShareMessage=()=>{
         var reefercode = this.state.ref_code
-        var a = 'Hey! Checkout Anytimedoc app. ' +'https://play.google.com/store/apps/details?id=com.anytimedoc' +' .Use my referral code ' + reefercode+ ' to get 100 wallet points.'
+        var a = 'Hey! Checkout Anytimedoc app. ' +'https://play.google.com/store/apps/details?id=com.anytimedoc' +' .Use my referral code ' + reefercode+ ' to get 500 wallet points.'
 
         Share.share({
                 message:a

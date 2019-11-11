@@ -17,15 +17,25 @@ import {
 } from 'react-native';
 import Button from 'react-native-button';
 const window = Dimensions.get('window');
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import { Marker } from 'react-native-maps';
 
 const GLOBAL = require('./Global');
 import { TextField } from 'react-native-material-textfield';
 type Props = {};
+const { width, height } = Dimensions.get('window');
 
 let customDatesStyles = [];
+const SCREEN_HEIGHT = height
+const SCREEN_WIDTH = width
+const ASPECT_RATIO = width / height
+const LATITUDE_DELTA = 0.0922
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
+// var lat = parseFloat(position.coords.latitude)
+// var long = parseFloat(position.coords.longitude)
 
 export default class FullDetail extends Component {
     constructor(props) {
@@ -38,9 +48,15 @@ export default class FullDetail extends Component {
             results: [],
             practice:[],
             firstService:'',
-            secondService:'',
+            secondService:'',noloc:0,
             timing :'',
-            timings :'',
+            timings :'',        marker :[1],
+ initialPosition: {
+latitude: 0,
+longitude: 0,
+latitudeDelta: LATITUDE_DELTA,
+longitudeDelta: LONGITUDE_DELTA,
+},
 
             images: [
                 {
@@ -163,6 +179,7 @@ export default class FullDetail extends Component {
 
 
     componentDidMount(){
+        console.log(GLOBAL.appointmentArray.id+'log')
         const url =   GLOBAL.BASE_URL +  'full_dr_detail'
 
         fetch(url, {
@@ -183,9 +200,29 @@ export default class FullDetail extends Component {
             }),
         }).then((response) => response.json())
             .then((responseJson) => {
-//                alert(JSON.stringify(responseJson))
+//                alert(JSON.stringify(responseJson.doctor_detail.lon))
 
                 if (responseJson.status == true) {
+
+                    if(responseJson.doctor_detail.lat == "" || responseJson.doctor_detail.lon ==""){
+                        this.setState({noloc: 1})
+                    }else{
+
+      var lat = parseFloat(responseJson.doctor_detail.lat)
+      var long = parseFloat(responseJson.doctor_detail.lon)
+
+      var initialRegion = {
+        latitude: lat,
+        longitude: long,
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA,
+      }
+      this.setState({noloc:0})
+      this.setState({initialPosition: initialRegion})
+        this.mapView.animateToRegion(initialRegion, 1);
+
+                    }
+
                      this.setState({results:responseJson.doctor_detail})
                      this.setState({practice:responseJson.doctor_detail.practices_at})
                     this.setState({firstService:responseJson.doctor_detail.services[0]})
@@ -208,6 +245,7 @@ export default class FullDetail extends Component {
             });
 
     }
+  _onMapReady = () => this.setState({marginBottom: 0})
 
 
     login = () => {
@@ -227,6 +265,7 @@ export default class FullDetail extends Component {
 
     render() {
 
+                console.log(this.state.initialPosition)
 
         let { phone } = this.state;
         let { email } = this.state;
@@ -279,8 +318,45 @@ export default class FullDetail extends Component {
                     <View style={{flexDirection:'column', marginLeft:30}}>
 
                         <Text style={{fontSize:15, color:'grey'}}>{this.state.results.lat_long_address}</Text>
+                        {this.state.noloc == 1 &&(
+                        <Text style={{fontSize:15, color:'black', marginTop:5}}>No location added!</Text>
 
-                        <Image style={{width:280, height:150, resizeMode:'cover', margin:5}} source ={require('./dloc.png')}/>
+                            )}
+
+                    {this.state.noloc == 0 &&(
+
+                <MapView
+                    clusterColor = '#77869E'
+                    clusterTextColor = 'white'
+                    clusterBorderColor = '#77869E'
+                    clusterBorderWidth = {4}
+                    showsUserLocation = {true}
+                    showsMyLocationButton = {false}
+                    pitchEnabled={true} rotateEnabled={true} zoomEnabled={true} scrollEnabled={true}
+                    onMapReady={this._onMapReady}
+                    ref = {(ref)=>this.mapView=ref}
+                    region = {this.state.initialPosition}
+
+
+                    style={{ width:300, height:250, marginBottom:this.state.marginBottom }}
+                >
+
+                    {this.state.marker.map(marker => (
+
+                        <Marker coordinate={this.state.initialPosition}
+                        title={'Hi User!'}
+                        description={'You are here!'}
+                        />
+                    ))}
+
+
+
+                </MapView>
+
+                        )}
+
+
+
                     </View>
                 </View>
 

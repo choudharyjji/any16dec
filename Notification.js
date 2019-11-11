@@ -102,12 +102,12 @@ componentDidMount(){
 }).then((response) => response.json())
     .then((responseJson) => {
 
-//       alert(JSON.stringify(responseJson))
+//      alert(JSON.stringify(responseJson))
        this.hideLoading()
        if (responseJson.status == true) {
 
 
-       this.setState({notificationslist : responseJson.list})
+//       this.setState({notificationslist : responseJson.list})
 
        }
 
@@ -127,8 +127,7 @@ componentDidMount(){
         <View style={{flex: 1}}>
         <ActivityIndicator style = {styles.loading}
 
-           size={50} color="#E9128B" />
-
+        size="large" color='#0592CC' />
         </View>
       )
     }

@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import { StyleSheet,Text,TextInput, View,Image ,Alert,ScrollView,FlatList,Dimensions ,TouchableOpacity,TouchableNativeFeedback,ActivityIndicator,Linking} from 'react-native';
+import { StyleSheet,Text,TextInput, View,Image ,Alert,ScrollView,FlatList,Dimensions ,PermissionsAndroid,TouchableOpacity,TouchableNativeFeedback,ActivityIndicator,Linking} from 'react-native';
 const window = Dimensions.get('window');
 import Button from 'react-native-button';
-import MapView from 'react-native-map-clustering';
-import { Marker } from 'react-native-maps';
+
 import Geolocation from 'react-native-geolocation-service';
+import Geolocations from '@react-native-community/geolocation';
+
 let textRef = React.createRef();
 let menuRef = null;
 const GLOBAL = require('./Global');
@@ -16,14 +17,23 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 const BannerWidth = Dimensions.get('window').width;
 const BannerHeight = 180;
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import { Marker } from 'react-native-maps';
 
 import Carousel from 'react-native-banner-carousel';
 import VideoPlayer from 'react-native-video-controls';
 
 var length = 0;
 var commonHtml = "";
+const { width, height } = Dimensions.get('window');
 
 var booking_type ='';
+const SCREEN_HEIGHT = height
+const SCREEN_WIDTH = width
+const ASPECT_RATIO = width / height
+const LATITUDE_DELTA = 0.0922
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO
+
 
 export default class Home extends Component {
 
@@ -51,75 +61,77 @@ export default class Home extends Component {
         moviesList :[
             {
 
-                title :'Doctor@Doorstep',
-                image:require('./doorstep.png')
+                title :' Doctor at \nDoorstep',
+                image:require('./doctor.png')
             },
 
 
             {
 
-                title :'Nursing care@ Home',
+                title :'Nursing care at \n Home',
                 image:require('./nurse.png')
             },
-
             {
 
-                title :'Medical Services @ Doorstep',
-                image:require('./medical.png')
+                title :'Lab Test\nBooking',
+                image:require('./lab-test.png')
             },
+
 
             {
 
                 title :'24x7 Online Consultation',
                 image:require('./online-consultation.png')
             },
-
             {
-
-                title :'Doctor Appointment @ Clinic',
-                image:require('./appointment.png')
+                title :'Pharmacy',
+                image:require('./phar.png')
             },
             {
 
-                title :'Hospital Admissions',
-                image:require('./hospital.png')
-            },
-            {
-
-                title :'Ambulance Booking',
+                title :'Ambulance \nBooking',
                 image:require('./ambulance.png')
             },
             {
 
-                title :'Lab Test Booking',
-                image:require('./lab-test.png')
+                title :'Doctor Appointment at Clinic',
+                image:require('./appointment.png')
+            },
+
+            {
+
+                title :' Medical Services \nat Doorstep',
+                image:require('./doorstep.png')
             },
             {
 
-                title :'Medical Equipments',
+                title :'Medical \nEquipments',
                 image:require('./medical.png')
             },
             {
 
-                title :'OPD Health Plans',
+                title :'OPD \nHealth Plans',
                 image:require('./health.png')
             },
 
             {
 
-                title :'Health Packages',
+                title :' Health \nPackages',
                 image:require('./packages.png')
             },
+
             {
 
-                title :'Best Surgical Packages',
+                title :'Best Surgical \nPackages',
                 image:require('./surgical.png')
             },
-            {
-                title :'Pharmacy',
-                image:require('./health.png')
-            },
 
+
+            {
+
+                title :'Hospital \nAdmissions',
+                image:require('./hospital.png')
+            },
 
         ],
 
@@ -135,6 +147,25 @@ export default class Home extends Component {
 
         }
     }
+ requestCameraPermission() {
+                try {
+                    const granted = PermissionsAndroid.request(
+                        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,{
+                            'title': 'Location Access Required',
+                            'message': 'This App needs to Access your location'
+                        }
+                    )
+                    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                        //To Check, If Permission is granted
+//                        that.callLocation(that);
+                    } else {
+                       // alert("Permission Denied");
+                    }
+                } catch (err) {
+                    alert("err",err);
+                    console.warn(err)
+                }
+            }
 
     hideLoading() {
         this.setState({loading: false})
@@ -315,6 +346,7 @@ export default class Home extends Component {
 
     }
     componentDidMount(){
+        this.requestCameraPermission()
 //        setInterval(() => alert('hi'), 1000)
 
         var s = moment().format('YYYY-MM-DD')
@@ -459,7 +491,7 @@ export default class Home extends Component {
 
 
     selectedFirst = (index) =>{
-        GLOBAL.date=''
+        GLOBAL.date=moment()
         GLOBAL.time=''
         GLOBAL.selectedAddress=[]
         GLOBAL.price=''
@@ -468,29 +500,27 @@ export default class Home extends Component {
         }else if (index == 1){
             this.props.navigation.navigate('Nurse')
         }else if (index == 2){
-            this.props.navigation.navigate('MedicalService')
+            this.props.navigation.navigate('Labtest')
         }else if (index == 3){
             this.props.navigation.navigate('BookingAppointment')
         }else if (index == 4){
-            this.props.navigation.navigate('OfflineBooking')
+            this.props.navigation.navigate('Pharmacy')
         }else if (index == 5){
-            this.props.navigation.navigate('Insurance')
-        }else if (index == 6){
             this.props.navigation.navigate('AmbulanceBooking')
+        }else if (index == 6){
+            this.props.navigation.navigate('OfflineBooking')
         }else if (index == 7){
-            this.props.navigation.navigate('Labtest')
+            this.props.navigation.navigate('MedicalService')
         }else if(index == 8){
             this.props.navigation.navigate('PurchaseType')            
-        }
-        else if (index == 9){
-    this.props.navigation.navigate('OpdHealth')
-}else if (index == 10){
+        }else if (index == 9){
+            this.props.navigation.navigate('OpdHealth')
+        }else if (index == 10){
             this.props.navigation.navigate('HealthPackege')
-        }
-        else if (index == 11){
+        }else if (index == 11){
             this.props.navigation.navigate('SurgicalPackage')
         }else if (index == 12){
-            this.props.navigation.navigate('Pharmacy')
+            this.props.navigation.navigate('MyHospital')
         }
     }
     selectedFirst1 = (itemData) => {

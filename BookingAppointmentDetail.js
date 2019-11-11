@@ -34,7 +34,7 @@ export default class BookingAppointmentDetail extends Component {
             recognized: '',
             started: '',
             results: [],
-            name :GLOBAL.user_details.name,
+            name :'',
             value:'',
             dob:'',
             address:'',
@@ -101,6 +101,7 @@ export default class BookingAppointmentDetail extends Component {
     _handleStateChange = (state) => {
 
 
+        this.getNewsUpdate()
 
 
             const interest = this.state.member.concat(GLOBAL.mymember)
@@ -147,6 +148,44 @@ export default class BookingAppointmentDetail extends Component {
         this.props.navigation.navigate('BookingDetailFinal')
     }
 
+
+ getNewsUpdate(){
+
+        const url = GLOBAL.BASE_URL +  'get_profile'
+
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user_id : GLOBAL.user_id,
+
+            }),
+        }).then((response) => response.json())
+            .then((responseJson) => {
+
+                if (responseJson.status == true) {
+
+
+
+                    this.setState({name :responseJson.user_details.name})
+                    this.setState({address: responseJson.user_details.address})
+                    this.setState({area: responseJson.user_details.area})
+                    this.setState({city: responseJson.user_details.city})
+
+                    GLOBAL.profileImage = responseJson.user_details.image
+                }else {
+                    alert('No News Found')
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+    }
+    
     login = () => {
         this.props.navigation.navigate('NurseTime')
     }
@@ -354,7 +393,7 @@ export default class BookingAppointmentDetail extends Component {
                             <Image style = {{width :60 ,height :60,margin:10,resizeMode:'contain'}}
                                    source={require('./myself.png')}/>
 
-                                   <Text style = {{color:'black',font:'Poppins-Medium',textAlign:'center'}}>
+                                   <Text style = {{color:'black',fontFamily:'Poppins-Medium',textAlign:'center'}}>
                                        Self
 
                                    </Text>
@@ -377,7 +416,7 @@ export default class BookingAppointmentDetail extends Component {
                             <Image style = {{width :60 ,height :60,margin:10,resizeMode:'contain'}}
                                    source={require('./add.png')}/>
 
-    <Text style = {{color:'black',font:'Poppins-Medium',textAlign:'center'}}>
+    <Text style = {{color:'black',fontFamily:'Poppins-Medium',textAlign:'center'}}>
         Add
 
     </Text>

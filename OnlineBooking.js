@@ -296,18 +296,37 @@ export default class OnlineBooking extends Component {
         )
     }
 
-    Calcprice = (dd,get)=>{
+Calcprice = (dd,get)=>{
         GLOBAL.type = "4"
         GLOBAL.price = dd
         if (get == 1){
             GLOBAL.onlinetype = "chat"
-            this.props.navigation.navigate('BookingAppointmentDetail')
+//BookingDetailFinal
+
+       if ( GLOBAL.appointmentArray.can_book_doctor_free  != 0)   {
+           this.props.navigation.navigate('BookingDetailFinal')
+
+       }else{
+           this.props.navigation.navigate('BookingAppointmentDetail')
+       }
+
+        //     GLOBAL.appointmentArray.can_book_doctor_free  != 0 &&(
+        //         this.props.navigation.navigate('BookingAppointmentDetail')
+        //     )}
+        //
+        // GLOBAL.appointmentArray.can_book_doctor_free  == 0 &&(
+        //
+        // )}
+
+
+
         }else {
             GLOBAL.onlinetype = "video"
             this.props.navigation.navigate('OnlineVideo')
         }
 
     }
+
     render() {
 //        alert(JSON.stringify(GLOBAL.appointmentArray))
 
@@ -434,10 +453,19 @@ export default class OnlineBooking extends Component {
 
                                     </View>
 
-                                    <Text style={{fontSize : 12,color :'#0592CC',fontFamily:'Poppins-Medium',}}>
+                                  {GLOBAL.appointmentArray.can_book_doctor_free  != 0 &&(
+                                        <Text style={{fontSize : 12,color :'#0592CC',fontFamily:'Poppins-Medium',}}>
 
-                                        Consult online for ₹ {GLOBAL.appointmentArray.online_consult_chat_price} onwards
-                                    </Text>
+                                            Consult online for ₹ 0 onwards
+                                        </Text>
+                                    )}
+                                    {GLOBAL.appointmentArray.can_book_doctor_free  == 0 &&(
+                                        <Text style={{fontSize : 12,color :'#0592CC',fontFamily:'Poppins-Medium',}}>
+
+                                            Consult online for ₹ {GLOBAL.appointmentArray.online_consult_chat_price} onwards
+                                        </Text>
+                                    )}
+
                                 </View>
 
                             </View>
@@ -472,7 +500,20 @@ export default class OnlineBooking extends Component {
                                     <View style={{flexDirection:'column',marginTop:18,marginLeft:12}}>
                                         <Text style={{fontSize:13,fontFamily:'Poppins-Medium',fontWeight:'bold',marginTop:7}}>Chat Us</Text>
                                         <Text style={{fontSize:11,fontFamily:'Poppins-Regular',marginTop:9}}>Schedule for your preferred date/time</Text>
-                                        <Text style={{fontSize:11,fontFamily:'Poppins-Medium',marginTop:4}}>15 minutes call duration ₹{GLOBAL.appointmentArray.online_consult_chat_price} Consultation Fee</Text>
+ {GLOBAL.appointmentArray.can_book_doctor_free  != 0 &&(
+                                            <Text style={{fontSize : 12,color :'#0592CC',fontFamily:'Poppins-Medium',}}>
+
+                                                <Text style={{fontSize:11,fontFamily:'Poppins-Medium',marginTop:4}}>15 minutes call duration ₹ 0 Consultation Fee</Text>
+                                            </Text>
+                                        )}
+
+                                        {GLOBAL.appointmentArray.can_book_doctor_free  == 0 &&(
+                                            <Text style={{fontSize : 12,color :'#0592CC',fontFamily:'Poppins-Medium',}}>
+
+                                                <Text style={{fontSize:11,fontFamily:'Poppins-Medium',marginTop:4}}>15 minutes call duration ₹{GLOBAL.appointmentArray.online_consult_chat_price} Consultation Fee</Text>
+                                            </Text>
+                                        )}
+
 
 
                                     </View>
@@ -500,7 +541,12 @@ export default class OnlineBooking extends Component {
                                     <View style={{flexDirection:'column',marginTop:18,marginLeft:12}}>
                                         <Text style={{fontSize:13,fontFamily:'Poppins-Medium',fontWeight:'bold',marginTop:7}}>Video Consult</Text>
                                         <Text style={{fontSize:11,fontFamily:'Poppins-Regular',marginTop:9}}>Schedule for your preferred date/time</Text>
-                                        <Text style={{fontSize:11,fontFamily:'Poppins-Medium',marginTop:4}}>15 minutes call duration ₹{GLOBAL.appointmentArray.online_consult_video_price} Consultation Fee</Text>
+ {GLOBAL.appointmentArray.can_book_doctor_free  == 0 &&(
+                                            <Text style={{fontSize:11,fontFamily:'Poppins-Medium',marginTop:4}}>15 minutes call duration ₹{GLOBAL.appointmentArray.online_consult_video_price} Consultation Fee</Text>
+                                        )}
+                                        {GLOBAL.appointmentArray.can_book_doctor_free  != 0 &&(
+                                            <Text style={{fontSize:11,fontFamily:'Poppins-Medium',marginTop:4}}>15 minutes call duration ₹ 0 Consultation Fee</Text>
+                                        )}
 
                                     </View>
 

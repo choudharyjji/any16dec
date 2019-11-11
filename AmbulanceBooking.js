@@ -34,7 +34,7 @@ export default class AmbulanceBooking extends Component {
         status :'',data:[],
         ipAdd : '',
         loading:'',location:GLOBAL.currLoc,catid:'',
-        marker :[],
+        marker :[1],
         name :'',        initialPosition: {
 latitude: 0,
 longitude: 0,
@@ -87,9 +87,10 @@ longitudeDelta: 0,
         let ic_url = this.state.imageurl + item.icon
         return (
             <TouchableOpacity onPress={() => this.selectVehicle(item,index)
-            }>
+            }
+            activeOpacity={0.99}>
 
-            <View   style  = {{width:window.width/2.2 - 8,margin:4, height:130,backgroundColor:'white',shadowColor: "#000",
+            <View   style  = {{width:window.width/2 - 10,margin:5, height:150,backgroundColor:'white',shadowColor: "#000",
                 shadowOffset: {
                     width: 0,
                     height: 2,
@@ -99,19 +100,19 @@ longitudeDelta: 0,
             }}
             >
                 <Image source={{uri : ic_url}}
-                       style  = {{width:window.width/2.2 - 8, height:70,marginTop: 3,alignSelf:'center',marginLeft:5,
+                       style  = {{width:window.width/2 - 10, height:70,marginTop: 3,alignSelf:'center',marginLeft:5,
                        }}
 
                 />
 
 
 
-                <Text style = {{fontSize:15,margin:1,fontFamily:'Poppins-Medium',color:'#0592CC',textAlign:'center',width:window.width/2.2 - 8}}>
+                <Text style = {{fontSize:15,margin:1,fontFamily:'Poppins-Medium',color:'#0592CC',textAlign:'center',width:window.width/2 - 10}}>
                     {item.name}
 
                 </Text>
-                <Text style = {{fontSize:15,margin:1,fontFamily:'Poppins-Medium',color:'black',textAlign:'center',width:window.width/2.2 - 8}}>
-                    {item.price}
+                <Text style = {{fontSize:15,margin:1,fontFamily:'Poppins-Medium',color:'black',textAlign:'center',width:'70%', alignSelf:'center'}}>
+                    ₹{item.price}/- onwards
 
                 </Text>
                             {item.is_selected != 0 &&(
@@ -177,6 +178,7 @@ longitudeDelta: 0,
 
 //                alert(JSON.stringify(responseJson))
                 if (responseJson.status == true) {
+                    this.props.navigation.goBack()
                     alert("Your booking is made successfully! Our representative will connect with you soon!")
                 }
             })
@@ -278,7 +280,7 @@ longitudeDelta: 0,
 
                     {this.state.marker.map(marker => (
 
-                        <Marker coordinate={this.state.initialRegion}
+                        <Marker coordinate={this.state.initialPosition}
                         title={'Hi User!'}
                         description={'You are here!'}
                         />
@@ -324,7 +326,7 @@ longitudeDelta: 0,
 
 
                 <View style= {{margin:8, position:'absolute', bottom:10, flexDirection:'column'}}>
-                    <FlatList style= {{flexGrow:0,margin:8, }}
+                    <FlatList style= {{flexGrow:0, }}
                                 horizontal={true}
                               data={this.state.data}
 

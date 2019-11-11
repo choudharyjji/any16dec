@@ -10,14 +10,19 @@ import {Platform, StyleSheet,TouchableOpacity,Image, Text, View ,Button, Share} 
 import Splash from './Splash.js';
 import Slider from './Slider.js';
 import Login from './Login.js';
+import ActiveSubscription from './ActiveSubscription.js';
 import PurchaseType from './PurchaseType.js';
 import Otp from './Otp.js';
 import Wallet from './Wallet.js';
 import LabMember from './LabMember.js';
 import Register from './Register.js';
 import Forgot from './Forgot.js';
+import Terms from './Terms.js';
 import BasicDetail from './BasicDetail.js';
+import History from './History.js';
+import NurseHistory from './NurseHistory.js';
 import Nurse from './Nurse.js';
+import EditProfile from './EditProfile.js';
 import PackageMember from './PackageMember.js';
 import Drawer from './Drawer.js';
 import VideoCall from './VideoCall.js';
@@ -29,6 +34,7 @@ import AppointmentDetail from './AppointmentDetail.js';
 import LabCartDetail from './LabCartDetail.js';
 import NurseBooking from './NurseBooking.js';
 import NurseTime from './NurseTime.js';
+import HistoryDetail from './HistoryDetail.js';
 import MedicalService from './MedicalService.js';
 import  MedicalServiceBooking from './MedicalServiceBooking.js';
 import Refernearn from './Refernearn.js';
@@ -38,9 +44,12 @@ import DoctorVisit   from './DoctorVisit.js';
 import Appointment from './Appointment.js';
 import MedicalDetail from './MedicalDetail.js';
 import MedicalEquipment from './MedicalEquipment.js';
+import HealthRecord from './HealthRecord.js';
 import DoctorVisitDetail from './DoctorVisitDetail.js';
 import Emergency from './Emergency.js';
+import MyHospital from './MyHospital.js';
 import Privacyp from './Privacyp.js';
+import NurseHistoryDetail from './NurseHistoryDetail.js';
 import AboutUs from './AboutUs.js';
 import BookingAppointment from './BookingAppointment.js';
 import BookingAppointmentDetail from './BookingAppointmentDetail.js';
@@ -142,7 +151,7 @@ const TabNavigator = createBottomTabNavigator({
       }
     },
 
-    Search: { screen: Search,
+    HealthRecord: { screen: HealthRecord,
     navigationOptions : {
 title:'Health Record',
 
@@ -313,11 +322,15 @@ navigationOptions: ({ navigation }) => ({
         AppointmentDetail:{screen:AppointmentDetail},
         Allergies: { screen: Allergies },
         AppointmentResc:{screen:AppointmentResc},
+        History:{screen:History},
         Illness: { screen: Illness },
         PackageMember:{screen: PackageMember},
         BasicSurgies: { screen: BasicSurgies },
+        NurseHistory:{screen: NurseHistory},
+        EditProfile:{screen: EditProfile},
         PurchaseType :{screen: PurchaseType },
         Pharmacy:{screen: Pharmacy},
+        NurseHistoryDetail:{screen:NurseHistoryDetail},
         ListAddress: { screen: ListAddress },
         Privacyp:{screen:Privacyp},
         AddAddress: { screen: AddAddress },
@@ -326,13 +339,17 @@ navigationOptions: ({ navigation }) => ({
         Labtest: { screen: Labtest },
         Wallet:{screen:Wallet},
         LabCartDetail:{screen: LabCartDetail},
+        MyHospital:{screen:MyHospital},
         PharmacyOrder:{screen: PharmacyOrder},
         EquipmentAddress : {screen: EquipmentAddress},
         LabHistoryDetail:{screen: LabHistoryDetail},
         LabMember:{screen: LabMember},
         Cart:{screen: Cart},
+        HistoryDetail:{screen:HistoryDetail},
         Insurance:{screen:Insurance},
         EquipmentCart:{screen:EquipmentCart},
+        ActiveSubscription:{screen:ActiveSubscription},
+        Terms:{screen:Terms},
         MedicalDetail:{screen:MedicalDetail},
         MedicalEquipment:{screen:MedicalEquipment},
         VideoCall:{screen:VideoCall},

@@ -137,14 +137,81 @@ export default class BookingDetailFinal extends Component {
     }
     
 
-    login = () => {
+login = () => {
         if(GLOBAL.date=='' ||  GLOBAL.time==''){
             alert('Please select date and time')
             return
         }
 
-        this.props.navigation.navigate('Payment')
+        if(GLOBAL.appointmentArray.can_book_doctor_free  != 0) {
+
+            const url = GLOBAL.BASE_URL + 'add_permanent_booking'
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+
+
+                body: JSON.stringify({
+
+
+                    "user_id": GLOBAL.user_id,
+                    "for": "4",
+                    "module": GLOBAL.onlinetype,
+                    "doctor_id": GLOBAL.appointmentArray.id,
+                    "booking_for": "self",
+                    "member_id": '',
+                    "booking_time": GLOBAL.time,
+                    "booking_date": GLOBAL.date,
+                    "name": GLOBAL.onlinename,
+                    "gender": GLOBAL.onlinegender,
+                    "dob": GLOBAL.onlinedob,
+                    "address": GLOBAL.onlineaddress,
+                    "area": GLOBAL.onlinearea,
+                    "pincode": GLOBAL.onlinecity,
+                    "city_state": GLOBAL.onlinecity,
+                    "coupan_code": 0,
+                    "coupan_code_id": 0,
+                    "total_amount": 0,
+                    "discount_amount": 0,
+                    "images": GLOBAL.listofimages,
+                    "wallet_amount": '',
+                    "referral_amount": '',
+                    "is_package":"1"
+
+
+                }),
+            }).then((response) => response.json())
+                .then((responseJson) => {
+
+
+                    // alert(JSON.stringify(responseJson))
+
+                    //  this.rajorPay()
+                    if (responseJson.status == true) {
+
+
+                        this.props.navigation.navigate('Thankyou')
+                        //   this.props.navigation.navigate('Thankyou')
+
+                    } else {
+
+
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                    this.hideLoading()
+                });
+        }else {
+
+
+            this.props.navigation.navigate('Payment')
+        }
     }
+
 
     check = () => {
         this.setState({isSecure :!this.state.isSecure})
@@ -246,7 +313,7 @@ export default class BookingDetailFinal extends Component {
     calculateDay(date){
 
 
-        const url = GLOBAL.BASE_URL +  'common_time'
+        const url = GLOBAL.BASE_URL +  'common_time_slots_comm'
 
         fetch(url, {
             method: 'POST',
@@ -258,7 +325,7 @@ export default class BookingDetailFinal extends Component {
             body: JSON.stringify({
 
                 "select_date":date,
-                "common_time_slots_comm":GLOBAL.onlinetype,
+                "for_time":GLOBAL.onlinetype,
                 "id":GLOBAL.appointmentArray.id
 
 
@@ -268,7 +335,7 @@ export default class BookingDetailFinal extends Component {
 
 
                 if (responseJson.status == true) {
-                    this.setState({time:responseJson.times})
+                    this.setState({time:responseJson.slot})
 
 
                 }else{
@@ -450,10 +517,22 @@ export default class BookingDetailFinal extends Component {
 
                                 </View>
 
+                                {GLOBAL.appointmentArray.can_book_doctor_free  == 0 &&(
+
                                 <Text style={{fontSize : 12,color :'#0592CC',fontFamily:'Poppins-Medium',}}>
 
                                     Consult online for ₹ {GLOBAL.appointmentArray.online_consult_chat_price} onwards
                                 </Text>
+                                )}
+
+                                {GLOBAL.appointmentArray.can_book_doctor_free  != 0 &&(
+
+
+                                <Text style={{fontSize : 12,color :'#0592CC',fontFamily:'Poppins-Medium',}}>
+
+                                    Consult online for ₹ 0 onwards
+                                </Text>
+                                )}
                             </View>
 
                         </View>

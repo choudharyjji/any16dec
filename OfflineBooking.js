@@ -725,8 +725,8 @@ export default class OfflineBooking extends Component {
                         <TouchableOpacity style = {{width:'35%'}}
                                           onPress={()=>this.props.navigation.navigate('Filter')}>
 
-                            <View style = {{flexDirection:'row',width:'30%'}}>
-                                <Image style = {{width :30 ,height: 28,alignSelf:'center',resizeMode: 'contain',marginLeft:10}}
+                            <View style = {{flexDirection:'row',width:'100%'}}>
+                                <Image style = {{width :25 ,height: 25,alignSelf:'center',resizeMode: 'contain',marginLeft:10}}
                                        source={require('./filter.png')}/>
 
 

@@ -18,7 +18,7 @@ const GLOBAL = require('./Global');
 import Button from 'react-native-button';
 import { TextField } from 'react-native-material-textfield';
 type Props = {};
-
+var arrayholder=[];
 
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -102,6 +102,8 @@ export default class AddAddress extends Component {
     }
 
     componentDidMount() {
+        arrayholder = this.state.stateslist ////////////// add this
+
         this.props.navigation.setParams({ handleSave: this._saveDetails });
     }
     showLoading() {
@@ -202,6 +204,22 @@ openState=()=>{
     this.setState({listvis: !this.state.listvis})
 }
 
+SearchFilterFunction(text){
+   // search with single value test_name ie. search with only test name of items in flatlist
+        const newData = arrayholder.filter(function(item){
+            const itemData = item.name.toUpperCase()
+            const textData = text.toUpperCase()
+            return itemData.indexOf(textData) > -1
+        })
+        this.setState({
+            stateslist: newData,
+            text: text
+
+
+        })
+
+    }
+
     render() {
 
         if(this.state.loading){
@@ -246,16 +264,28 @@ openState=()=>{
 
                         {this.state.listvis == true && (
 
-                          <FlatList style= {{flexGrow:0,margin:8, height:200, borderWidth:1, borderColor:'#bfbfbf',borderRadius:5}}
+                            <View style={{borderWidth:1, borderColor:'#e6e7f0',borderRadius:4}}>
+                        <View style = {{margin :5,width:'97%' ,height:45,borderWidth:1, borderColor:'#e6e7f0',borderRadius:4,flexDirection:'row',backgroundColor:'white',}}>
+
+                        <Image style = {{width :18 ,height: 18,alignSelf:'center',resizeMode: 'contain',marginLeft:13}}
+                               source={require('./search.png')}/>
+
+                        <TextInput style={{marginLeft:10 ,width:'100%', }}
+                                   placeholderTextColor='rgba(0, 0, 0, 0.4)'
+                                   onChangeText={(text) => this.SearchFilterFunction(text)}
+                                   placeholder={"Search"}/>
+                        </View>
+
+                          <FlatList style= {{flexGrow:0,margin:8, height:200}}
                               data={this.state.stateslist}
                               numColumns={1}
                               horizontal={false}
                               keyExtractor = { (item, index) => index.toString() }
                               renderItem={this._renderItems}
                     />
-
+                    </View>
                             )}
-                            
+                        
 
                             <TextInput style={styles.input}
                                        placeholderTextColor='rgba(0, 0, 0, 0.6)'

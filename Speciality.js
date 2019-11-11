@@ -171,7 +171,7 @@ export default class Speciality extends Component {
             <TouchableOpacity onPress={() => this.speciality(itemData)
             }>
 
-            <View   style  = {{width:window.width/2.2 - 8,margin:4, height:200,backgroundColor:'white',shadowColor: "#000",
+            <View   style  = {{width:window.width/2.2 - 8,margin:4, height:'auto',backgroundColor:'white',shadowColor: "#000",
                 shadowOffset: {
                     width: 0,
                     height: 2,

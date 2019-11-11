@@ -63,15 +63,15 @@ export default class Slider extends Component<Props> {
                             showPagination = {true}
                             onChangeIndex ={ (index) => this.renders(index.index) }
                         >
-                            <View style={[styles.child, { backgroundColor: 'tomato' }]}>
+                            <View style={[styles.child, { backgroundColor: 'transparent' }]}>
                                 <Image style = {styles.text}
                                        source={require('./first.png')}/>
                             </View>
-                            <View style={[styles.child, { backgroundColor: 'thistle' }]}>
+                            <View style={[styles.child, { backgroundColor: 'transparent' }]}>
                                 <Image style = {styles.text}
                                        source={require('./second.png')}/>
                             </View>
-                            <View style={[styles.child, { backgroundColor: 'skyblue' }]}>
+                            <View style={[styles.child, { backgroundColor: 'transparent' }]}>
                                 <Image style = {styles.text}
                                        source={require('./third.png')}/>
                             </View>

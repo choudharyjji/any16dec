@@ -113,7 +113,7 @@ export default class MedicalEquipment extends Component {
 
 
     speciality = (item) => {
-
+//        alert(JSON.stringify(item))
         GLOBAL.medicalEquipment = item
         this.props.navigation.navigate('MedicalDetail')
     }
@@ -131,7 +131,7 @@ export default class MedicalEquipment extends Component {
 
         return (
             <TouchableOpacity onPress={() => this.speciality(itemData.item)
-            }>
+            } activeOpacity={0.99}>
 
                 <View   style  = {{width:window.width/2 - 8,margin:4,backgroundColor:'white',shadowColor: "#000",
                     shadowOffset: {
@@ -147,7 +147,7 @@ export default class MedicalEquipment extends Component {
 
 
                     <Image source={{uri :imge}}
-                           style  = {{width:window.width/2 - 8, height:150,marginTop: 3,alignSelf:'center',marginLeft:5,
+                           style  = {{width:window.width/2 - 8, height:150,marginTop: 3,alignSelf:'center',marginLeft:5,resizeMode:'contain'
                            }}
 
                     />
@@ -157,8 +157,8 @@ export default class MedicalEquipment extends Component {
 
                     </Text>
                     {itemData.item.for == "Rental" && itemData.item.rent_discount == "0.00" && (
-                        <Text style = {{fontSize:15,margin:1,fontFamily:'Poppins-Medium',color:'#e1e1e1',textAlign:'center',width:window.width/2.2 - 8}}>
-                       Started from {itemData.item.rent_price}
+                        <Text style = {{fontSize:15,margin:1,fontFamily:'Poppins-Medium',color:'#252625',textAlign:'center',width:window.width/2.2 - 8}}>
+                       Started from ₹{itemData.item.rent_price}/-
 
                         </Text>
 
@@ -166,8 +166,8 @@ export default class MedicalEquipment extends Component {
 
 
                     {itemData.item.for == "Rental" && itemData.item.rent_discount != "0.00" && (
-                        <Text style = {{fontSize:15,margin:1,fontFamily:'Poppins-Medium',color:'#e1e1e1',textAlign:'center',width:window.width/2.2 - 8}}>
-                            Started from {itemData.item.rent_discount}
+                        <Text style = {{fontSize:15,margin:1,fontFamily:'Poppins-Medium',color:'#252625',textAlign:'center',width:window.width/2.2 - 8}}>
+                            Started from ₹{itemData.item.rent_discount}/-
 
                         </Text>
 
@@ -176,8 +176,8 @@ export default class MedicalEquipment extends Component {
 
 
                     {itemData.item.for == "Purchase" && itemData.item.purchase_discount == "0.00" && (
-                        <Text style = {{fontSize:15,margin:1,fontFamily:'Poppins-Medium',color:'#e1e1e1',textAlign:'center',width:window.width/2.2 - 8}}>
-                            Started from {itemData.item.purchase_price}
+                        <Text style = {{fontSize:15,margin:1,fontFamily:'Poppins-Medium',color:'#252625',textAlign:'center',width:window.width/2.2 - 8}}>
+                            Started from ₹{itemData.item.purchase_price}/-
 
                         </Text>
 
@@ -185,10 +185,16 @@ export default class MedicalEquipment extends Component {
 
 
                     {itemData.item.for == "Purchase" && itemData.item.purchase_discount != "0.00" && (
-                        <Text style = {{fontSize:15,margin:1,fontFamily:'Poppins-Medium',color:'#e1e1e1',textAlign:'center',width:window.width/2.2 - 8}}>
-                            Started from {itemData.item.purchase_discount}
+                    <View>
+                        <Text style = {{fontSize:15,margin:1,fontFamily:'Poppins-Medium',color:'#0592CC',textAlign:'center',width:window.width/2.2 - 8}}>
+                            Started from ₹{itemData.item.purchase_discount}/-
 
                         </Text>
+                        <Text style = {{fontSize:15,margin:1,fontFamily:'Poppins-Medium',color:'#252625',textAlign:'center',width:window.width/2.2 - 8,textDecorationLine: 'line-through', textDecorationStyle: 'solid'}}>
+                            MRP: ₹{itemData.item.purchase_price}/-
+
+                        </Text>
+                        </View>
 
                     ) }
 

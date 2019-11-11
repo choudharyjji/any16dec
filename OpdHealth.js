@@ -181,8 +181,7 @@ export default class OpdHealth extends Component {
 
         return (
 
-            <TouchableOpacity onPress={() => this.selectedFirst(index)
-            }>
+
                 <View style={{ flex: 1 ,marginLeft : 5,width:window.width - 10, backgroundColor: 'white',
                     justifyContent:'space-around',marginTop: 10,marginBottom:10,borderRadius:6}}>
 
@@ -203,21 +202,21 @@ export default class OpdHealth extends Component {
 
                     <View style = {{flexDirection:'row',width:'100%'}}>
                         {item.discount_price == "0.00" && (
-                            <Text style={{marginLeft : 5,marginTop:5,fontSize : 18,color :'#FF2D00', height:'auto',fontFamily:'Poppins-Regular',width :'20%',}}>
+                            <Text style={{marginLeft : 5,marginTop:5,fontSize : 18,color :'#FF2D00', height:'auto',fontFamily:'Poppins-Regular',width :'25%',}}>
 
-                           {item.base_price}
+                           ₹{item.base_price}/-
                             </Text>
                         )}
                         {item.discount_price != "0.00" && (
-                            <Text style={{marginLeft : 5,marginTop:5,fontSize : 18,color :'#FF2D00', height:'auto',fontFamily:'Poppins-Regular',width :'20%',textDecorationLine: 'line-through',}}>
+                            <Text style={{marginLeft : 5,marginTop:5,fontSize : 18,color :'#FF2D00', height:'auto',fontFamily:'Poppins-Regular',width :'25%',textDecorationLine: 'line-through',}}>
 
-                         {item.base_price}
+                         ₹{item.base_price}/-
                             </Text>
                         )}
                         {item.discount_price != "0.00" && (
                         <Text style={{marginLeft : 5,marginTop:5,fontSize : 18,color :'#000000', height:'auto',fontFamily:'Poppins-Regular',width :'50%'}}>
 
-                         {item.discount_price}
+                         ₹{item.discount_price}/-
                         </Text>
                         )}
                         {item.discount_price == "0.00" && (
@@ -296,7 +295,6 @@ export default class OpdHealth extends Component {
 
 
 
-            </TouchableOpacity>
         )
     }
     render() {

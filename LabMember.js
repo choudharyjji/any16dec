@@ -746,15 +746,15 @@ export default class LabMember extends Component {
 
 
 
-                <View style = {{position:'absolute',bottom:20,flexDirection:'row',width:'100%',backgroundColor:'white',height:50}}>
+                <View style = {{position:'absolute',bottom:20,flexDirection:'row',width:'100%',backgroundColor:'white',height:50, justifyContent:'space-between'}}>
 
-                    <Text style={{marginLeft : 5,marginTop:10,fontSize : 18,color :'#FF2D00', height:'auto',fontFamily:'Poppins-Regular',width :'60%',}}>
+                    <Text style={{marginLeft : 10,marginTop:10,fontSize : 18,color :'#FF2D00', height:'auto',fontFamily:'Poppins-Regular',width :'60%',}}>
 
                         ₹{this.state.myprice}/-
                     </Text>
 
                     <Button
-                        style={{padding:4,fontSize: 14,marginTop:10, color: 'white',backgroundColor:'#0592CC',marginLeft:'5%',width:100,height:30,fontFamily:'Poppins-Medium',borderRadius:4}}
+                        style={{padding:4,fontSize: 14,marginTop:10, color: 'white',backgroundColor:'#0592CC',marginRight:10,width:100,height:30,fontFamily:'Poppins-Medium',borderRadius:4}}
                         styleDisabled={{color: 'red'}}
                         onPress={() => this.login()}>
                         ADD TO CART

@@ -166,7 +166,7 @@ class  HealthPackege extends React.Component{
         );
     }
 
-    _keyExtractor=(item, index)=>item.key;
+    _keyExtractor=(item, index)=>item.id;
 
     static navigationOptions = ({ navigation }) => {
         return {

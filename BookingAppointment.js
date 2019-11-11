@@ -56,7 +56,7 @@ export default class BookingAppointment extends Component {
         if (res == null || res.length == 0) {
             this.fetchHospital(res,type,depart,'')
         } else {
-            var array = res[0].array
+            var array = res.array
             for (var i = 0; i < array.length; i++) {
                 if (array[i].selected == "Y") {
                     speciality = speciality + array[i].id + ','
@@ -83,7 +83,7 @@ export default class BookingAppointment extends Component {
             this.setState({hospital:[]})
 
         } else {
-            var array = res[0].array
+            var array = res.array
             for (var i = 0; i < array.length; i++) {
                 if (array[i].selected == "Y") {
                     hospital = hospital + array[i].id + ','
@@ -148,7 +148,7 @@ export default class BookingAppointment extends Component {
         if (res == null || res.length == 0) {
             this.fetchSpeciality(res,type,'')
         } else {
-            var array = res[0].array
+            var array = res.array
             for (var i = 0; i < array.length; i++) {
                 if (array[i].selected == "Y") {
                     depart = depart + array[i].id + ','
@@ -222,65 +222,73 @@ export default class BookingAppointment extends Component {
     }
 
 
-    _handleStateChange = (state) => {
-
-
-if (GLOBAL.appply == 1){
-    this.getApicall('')
-}else {
-    this.setState({department:[]})
-    this.setState({speciality:[]})
-    this.setState({hospital:[]})
-    const url =  GLOBAL.BASE_URL  + 'fetch_nearest_doctor'
-
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-
-
-        body: JSON.stringify({
-            "user_id":GLOBAL.user_id,
-            "lat":GLOBAL.lat,
-            "long":GLOBAL.long,
-            "doctor_condition":GLOBAL.doctor_condition,
-            "type":"",
-            "departments_filter":"",
-            "hospital_filter":"",
-            "price_range_min":"",
-            "price_range_max":"",
-            "is_favrouite":"",
-            "specialty":"",
+_handleStateChange = (state) => {
+        var values =  AsyncStorage.getItem('apply');
+        values.then((f)=> {
 
 
 
+            if (f == 1){
+                this.getApicall('')
+            }else {
+                this.setState({department:[]})
+                this.setState({speciality:[]})
+                this.setState({hospital:[]})
+                const url =  GLOBAL.BASE_URL  + 'fetch_nearest_doctor'
 
-        }),
-    }).then((response) => response.json())
-        .then((responseJson) => {
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+
+
+                    body: JSON.stringify({
+                        "user_id":GLOBAL.user_id,
+                        "lat":GLOBAL.lat,
+                        "long":GLOBAL.long,
+                        "doctor_condition":GLOBAL.doctor_condition,
+                        "type":"",
+                        "departments_filter":"",
+                        "hospital_filter":"",
+                        "price_range_min":"",
+                        "price_range_max":"",
+                        "is_favrouite":"",
+                        "specialty":"",
 
 
 
 
-            if (responseJson.status == true) {
-                this.setState({results:responseJson.doctor_list_s})
-                arrayholder = responseJson.doctor_list_s
-            }else{
-                this.setState({results:[]})
-                arrayholder =[]
+                    }),
+                }).then((response) => response.json())
+                    .then((responseJson) => {
+
+
+
+
+                        if (responseJson.status == true) {
+                            this.setState({results:responseJson.doctor_list_s})
+                            arrayholder = responseJson.doctor_list_s
+                        }else{
+                            this.setState({results:[]})
+                            arrayholder =[]
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        this.hideLoading()
+                    });
+
             }
         })
-        .catch((error) => {
-            console.error(error);
-            this.hideLoading()
-        });
 
-}
+
 
 
 
     }
+
+
 
     componentDidMount(){
         this.props.navigation.addListener('willFocus',this._handleStateChange);
@@ -402,6 +410,11 @@ if (GLOBAL.appply == 1){
                 Offline
             </Text>
         )}
+        {item.can_book_doctor_free  != 0 &&(
+            <Text style={{marginLeft : 10,fontSize : 12,color :'#3DBA56',fontFamily:'Poppins-Medium',width:50,textAlign:'center'}}>
+                Prime
+            </Text>
+        )}
 
 
     </View>
@@ -427,8 +440,7 @@ if (GLOBAL.appply == 1){
     </View>
 
                                <View style = {{flexDirection:'row'}}>
-                               <Text style={{marginLeft : 5,fontSize : 12,color :'#8F8F8F',height:40,fontFamily:'Poppins-Medium',width :'50%'}}>
-
+                               <Text style={{marginLeft : 5,fontSize : 12,color :'#8F8F8F',height:'auto',fontFamily:'Poppins-Medium',width :'80%'}}>
                                    {speciality}
                                </Text>
 
@@ -486,10 +498,21 @@ if (GLOBAL.appply == 1){
 
                                </View>
 
-                               <Text style={{fontSize : 12,color :'#0592CC',fontFamily:'Poppins-Medium',}}>
+{item.can_book_doctor_free  == 0 &&(
+                                   <Text style={{fontSize : 12,color :'#0592CC',fontFamily:'Poppins-Medium',}}>
 
-                                   Consult online for ₹ {item.online_consult_chat_price} onwards
-                               </Text>
+                                       Consult online for ₹ {item.online_consult_chat_price} onwards
+                                   </Text>
+                               )
+                               }
+
+                               {item.can_book_doctor_free  != 0 &&(
+                                   <Text style={{fontSize : 12,color :'#0592CC',fontFamily:'Poppins-Medium',}}>
+
+                                       Consult online for ₹ 0 onwards
+                                   </Text>
+                               )
+                               }
     </View>
 
 </View>
@@ -585,8 +608,8 @@ if (GLOBAL.appply == 1){
                         <TouchableOpacity style = {{width:'35%'}}
                                               onPress={()=>this.props.navigation.navigate('Filter')}>
 
-                    <View style = {{flexDirection:'row',width:'30%'}}>
-                        <Image style = {{width :30 ,height: 28,alignSelf:'center',resizeMode: 'contain',marginLeft:10}}
+                    <View style = {{flexDirection:'row',width:'100%'}}>
+                        <Image style = {{width :25 ,height: 25,alignSelf:'center',resizeMode: 'contain',marginLeft:10}}
                                source={require('./filter.png')}/>
 
 

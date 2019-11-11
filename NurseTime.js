@@ -129,13 +129,14 @@ export default class NurseTime extends Component {
     }
 
 
-    login = () => {
+login = () => {
+        GLOBAL.time = this.state.phone
 
         if(GLOBAL.date==''){
             alert('Please select date.')
             return
         }
-        if(GLOBAL.time ==''){
+        if(this.state.phone ==''){
             alert('Please select time.')
             return
         }
@@ -307,17 +308,17 @@ export default class NurseTime extends Component {
 
                     <Text style={{marginLeft : 5,marginTop:10,fontSize : 18,color :'#707070', height:'auto',fontFamily:'Poppins-Regular',width :window.width - 80}}>
 
-                        Select Number of Days
+                        Enter Number of Days
                     </Text>
 
 
-                    <FlatList style= {{flexGrow:0,margin:8}}
-                              data={this.state.images}
-                              numColumns={1}
-                              horizontal={true}
-                              keyExtractor = { (item, index) => index.toString() }
-                              renderItem={this._renderItems}
-                    />
+ <TextField
+        label= 'Enter No of Day'
+        value={phone}
+        keyboardType={'numeric'}
+        onChangeText={ (phone) => this.setState({ phone }) }
+        tintColor = {'#0592CC'}
+    />
 
 
 

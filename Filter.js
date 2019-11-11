@@ -162,6 +162,8 @@ export default class Filter extends Component {
         store.delete('hospital')
         store.delete('speciality')
         store.delete('departments')
+        AsyncStorage.setItem('apply', false);
+
     }
 
     logins= ()=>{

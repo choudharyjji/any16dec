@@ -109,7 +109,9 @@ export default class Login extends Component {
                     if (responseJson.status == true) {
                         this.setState({results: responseJson.user_detail})
                         GLOBAL.user_id = this.state.results.user_id
-                        AsyncStorage.setItem('userID', this.state.results.user_id);
+                        GLOBAL.myname= this.state.results.name
+                        GLOBAL.myemail = this.state.results.email
+                        AsyncStorage.setItem('userID', this.state.results.user_id.toString());
                         AsyncStorage.setItem('image', this.state.results.image);
                         AsyncStorage.setItem('name', this.state.results.name);
                         AsyncStorage.setItem('email', this.state.results.email);

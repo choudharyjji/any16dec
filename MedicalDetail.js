@@ -34,20 +34,15 @@ import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 
 const BannerWidth = Dimensions.get('window').width;
 const BannerHeight = 250;
-var aaa = moment().toDate()
-//alert(aaa)
 
 class MedicalDetail extends React.Component {
-    constructor () {
-        super()
-        this.state = {
+    state = {
         date: new Date('2020-06-12T14:42:42'),
         mode: 'date',
         show: false,
         type:'',
-        gettdate: aaa,
         value: 0,
-        forType:GLOBAL.medicalEquipment.for,
+        forType:'',
         radio_props: [
             {label: 'For Week', value:0},
             {label: 'For Month', value:1},
@@ -55,16 +50,25 @@ class MedicalDetail extends React.Component {
         ],
         banner:[],
     }
-}
 
-        static navigationOptions = ({ navigation }) => {
+
+    static navigationOptions = ({ navigation }) => {
+        const { params = {} } = navigation.state;
         return {
+            headerRight:  <TouchableOpacity onPress={() =>params.handleSave()
+            }>
+                <Image source={require('./cartlogo.png')}
+                       style={{ height:30,width:30,resizeMode:'contain',marginRight:10}} />
+            </TouchableOpacity>,
             //   header: () => null,
-            title: 'MEDICAL EQUIPMENT',
+            title: 'EQUIPMENT',
             headerTitleStyle :{textAlign: 'center',alignSelf:'center',color :'black'},
             headerStyle:{
                 backgroundColor:'white',
             },
+
+
+
             headerTintColor :'#0592CC',
             animations: {
                 setRoot: {
@@ -73,37 +77,37 @@ class MedicalDetail extends React.Component {
             }
         }
     }
-
     renderPage(image, index) {
         return (
             <View key={index}>
-                <ImageBackground style={{ width: BannerWidth, height: BannerHeight }} source={{ uri: image }}>
-
-
-                </ImageBackground>
+                <Image style={{ width: BannerWidth, height: BannerHeight, resizeMode:'contain' }} source={{ uri: image }}/>
             </View>
         );
     }
 
-
+    _saveDetails=()=> {
+//        Alert.alert('clicked save');
+        this.props.navigation.replace('EquipmentCart')
+    }
 componentDidMount(){
+    this.props.navigation.setParams({ handleSave: this._saveDetails });
 //        alert(JSON.stringify(GLOBAL.medicalEquipment))
-        let startDate = moment();
-        for (let i=0; i<700; i++) {
-            customDatesStyles.push({
-                startDate: startDate.clone().add(i, 'days'), // Single date since no endDate provided
-                dateNameStyle: styles.dateNameStyle,
-                dateNumberStyle: styles.dateNumberStyle,
+    let startDate = moment();
+    for (let i=0; i<700; i++) {
+        customDatesStyles.push({
+            startDate: startDate.clone().add(i, 'days'), // Single date since no endDate provided
+            dateNameStyle: styles.dateNameStyle,
+            dateNumberStyle: styles.dateNumberStyle,
 
-                // Random color...
-                dateContainerStyle: {shadowOpacity: 1.0,
-                    shadowRadius: 1,
-                    shadowColor: 'black',
-                    shadowOffset: { textAlign:'left',height: 0, width: 0 },margin :5,width:40,borderRadius: 0 ,backgroundColor: 'white' },
-            });
-        }
-        var date = new Date()
-        var s = moment(date).format('YYYY-MM-DD')
+            // Random color...
+            dateContainerStyle: {shadowOpacity: 1.0,
+                shadowRadius: 1,
+                shadowColor: 'black',
+                shadowOffset: { textAlign:'left',height: 0, width: 0 },margin :5,width:40,borderRadius: 0 ,backgroundColor: 'white' },
+        });
+    }
+    var date = new Date()
+    var s = moment(date).format('YYYY-MM-DD')
 
     var my = [];
     {GLOBAL.medicalEquipment.gallery.map((message) =>
@@ -204,7 +208,7 @@ componentDidMount(){
                 }),
             }).then((response) => response.json())
                 .then((responseJson) => {
-                //    alert(JSON.stringify(responseJson))
+                  //  alert(JSON.stringify(responseJson))
 
 
                     if (responseJson.status == true) {
@@ -212,7 +216,7 @@ componentDidMount(){
                         alert('Equipment added to Cart Successfully!')
 
                     } else {
-                        alert(responseJson.message)
+                        alert('Please delete cart')
                     }
                 })
                 .catch((error) => {
@@ -243,14 +247,14 @@ componentDidMount(){
                 }),
             }).then((response) => response.json())
                 .then((responseJson) => {
-//                    alert(JSON.stringify(responseJson))
+
 
 
                     if (responseJson.status == true) {
-                        this.props.navigation.naviagte('EquipmentCart')
+                        this.props.navigation.navigate('EquipmentCart')
 
                     } else {
-//                        alert('Invalid Credentials!')
+                        alert('Please clear cart')
                     }
                 })
                 .catch((error) => {
@@ -296,14 +300,14 @@ componentDidMount(){
             s = GLOBAL.medicalEquipment.purchase_discount
         }
 
-//        const { show, date, mode } = this.state;
+        const { show, date, mode } = this.state;
 
         return(
-            <View style={{flex:1, flexDirection:'column'}}>
+            <ScrollView>
 
 
+                    <View style={{flex:1,backgroundColor:'transparent',flexDirection:'column'}}>
 
-            <ScrollView contentContainerStyle={{flexDirection:'column'}}>
 
                         <Carousel
                             autoplay
@@ -313,7 +317,6 @@ componentDidMount(){
                             pageSize={BannerWidth}>
                             {this.state.banner.map((image, index) => this.renderPage(image, index))}
                         </Carousel>
-
 
                         <View style={{height:200,width:'100%',backgroundColor:'white',flexDirection:'column',elevation:2}}>
                             <Text style={{fontSize:19,fontFamily:'Poppins-Medium',color:'#000000',marginTop:15,marginLeft:15}}>{GLOBAL.medicalEquipment.name}</Text>
@@ -325,7 +328,7 @@ componentDidMount(){
 
                                     {GLOBAL.medicalEquipment.for == "Rental" && GLOBAL.medicalEquipment.rent_discount == "0.00" && (
                                         <Text style = {{fontSize:15,margin:1,fontFamily:'Poppins-Medium',color:'black',textAlign:'center',width:window.width/2.2 - 8}}>
-                                           Rs. {GLOBAL.medicalEquipment.rent_price}
+                                            Rs. {GLOBAL.medicalEquipment.rent_price}
 
                                         </Text>
 
@@ -334,7 +337,7 @@ componentDidMount(){
 
                                     {GLOBAL.medicalEquipment.for == "Rental" && GLOBAL.medicalEquipment.rent_discount != "0.00" && (
                                         <Text style = {{fontSize:15,margin:1,fontFamily:'Poppins-Medium',color:'black'}}>
-                                           Rs. {GLOBAL.medicalEquipment.rent_discount}
+                                            Rs. {GLOBAL.medicalEquipment.rent_discount}
 
                                         </Text>
 
@@ -367,20 +370,20 @@ componentDidMount(){
                             </View>
 
 
-{GLOBAL.rentPurchase=='Rental' && (
-                            <View style={{flexDirection:'row',marginLeft:22,alignItems:'center'}}>
-                                <Image source={require('./trucklogo.png')}
-                                       style={{ height:48,width:48,resizeMode:'contain',marginTop:20}} />
+                            {GLOBAL.rentPurchase=='Rental' && (
+                                <View style={{flexDirection:'row',marginLeft:22,alignItems:'center'}}>
+                                    <Image source={require('./trucklogo.png')}
+                                           style={{ height:48,width:48,resizeMode:'contain',marginTop:20}} />
 
-                                <View style={{flexDirection:'column',marginLeft:18,marginTop:18}}>
-                                    <Text style={{fontSize:13,fontFamily:'Poppins-Regular',color:'#989696'}}>Free shipping and setup by</Text>
-                                    <Text style={{fontSize:20,fontFamily:'Poppins-Medium',color:'#000000'}}>{GLOBAL.shipTime} hours</Text>
+                                    <View style={{flexDirection:'column',marginLeft:18,marginTop:18}}>
+                                        <Text style={{fontSize:13,fontFamily:'Poppins-Regular',color:'#989696'}}>Free shipping and setup by</Text>
+                                        <Text style={{fontSize:20,fontFamily:'Poppins-Medium',color:'#000000'}}>{GLOBAL.shipTime} hours</Text>
+                                    </View>
+
                                 </View>
 
-                            </View>
 
-
-    )}
+                            )}
 
 
 
@@ -397,7 +400,7 @@ componentDidMount(){
 
 
                             <View style = {{margin:10, width:'100%', backgroundColor:'white', flexDirection:'column'}}>
-                            <HTML html={GLOBAL.medicalEquipment.description} imagesMaxWidth={Dimensions.get('window').width} />
+                                <HTML html={GLOBAL.medicalEquipment.description} imagesMaxWidth={Dimensions.get('window').width} />
                             </View>
                             {this.state.forType != "Purchase" &&  (
                                 <View style = {{margin :5}}>
@@ -423,6 +426,31 @@ componentDidMount(){
                             )}
 
 
+
+                            {this.state.forType != "Purchase" && (
+                            <CalendarStrip
+
+                                calendarAnimation={{type: 'sequence', duration: 30}}
+                                daySelectionAnimation={{type: 'background', duration: 300, highlightColor: '#80D8CF'}}
+                                style={{height:120, paddingTop: 15}}
+                                calendarHeaderStyle={{color: 'black'}}
+                                calendarColor={'white'}
+                                highlightDateNameStyle={{color:'white'}}
+                                highlightDateNumberStyle  ={{color:'white'}}
+
+
+                                customDatesStyles={customDatesStyles}
+                                dateContainerStyle = {{shadowOpacity: 1.0,
+                                    shadowRadius: 1,
+                                    shadowColor: 'black',
+                                    shadowOffset: { textAlign:'left',height: 0, width: 0 },margin :5,width:40,borderRadius: 0 ,backgroundColor: 'white' }}
+
+                                iconContainer={{flex: 0.1}}
+                                onDateSelected={(date)=> this.dates(date)}
+                            />
+
+                            )}
+
                         </View>
 
 
@@ -430,30 +458,7 @@ componentDidMount(){
                         </View>
 
 
-                            {this.state.forType != "Purchase" && (
-
-                    <CalendarStrip
-                        selectedDate={this.state.gettdate}
-                        calendarAnimation={{type: 'sequence', duration: 30}}
-                        daySelectionAnimation={{type: 'background', duration: 300, highlightColor: '#80D8CF'}}
-                        style={{height:120, paddingTop: 15,position:'absolute', bottom:102, width:window.width}}
-                        calendarHeaderStyle={{color: 'black'}}
-                        calendarColor={'white'}
-                        highlightDateNameStyle={{color:'white'}}
-                        highlightDateNumberStyle  ={{color:'white'}}
-
-                        iconContainer={{flex: 0.1}}
-                        onDateSelected={(date)=> this.dates(date)}
-                    />
-
-                            )}
-
-
-
                         <View style={{flexDirection:'row',height:80,width:'100%',position:'absolute',bottom:0,left:0,right:0,backgroundColor:'white',alignItems:'center',elevation:2}}>
-
-
-
                             {this.state.forType == "Purchase" && (
                                 <Text style={{fontSize:23,fontFamily:'Poppins-Regular',color:'#000000',marginLeft:25,width:'50%'}}>₹{s}</Text>
                             )}
@@ -487,9 +492,13 @@ componentDidMount(){
                                 </Button>
                             ) }
                         </View>
-            </ScrollView>
-                                    </View>
 
+
+
+
+                    </View>
+
+            </ScrollView>
         );
     }
 }
@@ -497,9 +506,9 @@ const styles = StyleSheet.create({
     wrapper: {
     },
     container: {
-        flex:1,
-        backgroundColor :'#f1f1f1',
 
+        backgroundColor :'#f1f1f1',
+        height: window.height,
     },
     loading: {
         position: 'absolute',

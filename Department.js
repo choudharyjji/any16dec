@@ -184,7 +184,7 @@ export default class Department extends Component {
                 });
 
         } else{
-            this.setState({results:res[0].array})
+            this.setState({results:res.array})
         }
 
 
@@ -260,7 +260,7 @@ export default class Department extends Component {
 
 
 
-        store.push("departments", dict);
+        store.update("departments", dict);
         //GLOBAL.department = this.state.results
         this.props.navigation.goBack()
     }

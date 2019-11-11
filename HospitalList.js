@@ -43,7 +43,7 @@ export default class HospitalList extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             //   header: () => null,
-            title: 'HOSPITAL ADMISSION',
+            title: 'HOSPITAL LIST',
             headerTitleStyle :{textAlign: 'center',alignSelf:'center',color :'black'},
             headerStyle:{
                 backgroundColor:'white',

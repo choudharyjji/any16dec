@@ -615,13 +615,15 @@ export default class EquipmentCart extends Component {
             .then((responseJson) => {
 
 
-
+//                alert(JSON.stringify(responseJson))
 
                 if (responseJson.status == true) {
+                    alert("Equipment removed from cart!")
                     this.setState({results:responseJson.list})
                     this.setState({prices:responseJson.sum_total})
                 }else{
-
+                    this.setState({results:[]})
+                    this.setState({prices: '0'})
                 }
             })
             .catch((error) => {
@@ -661,14 +663,14 @@ var s = item.path + item.image
 
                 <View>
                 <Image source={{uri :s}}
-                       style  = {{width:150, height:150,marginTop: 3,marginLeft:5,
+                       style  = {{width:150, height:150,marginTop: 3,marginLeft:5,resizeMode:'contain'
                        }}
 
                 />
                 </View>
                 <View>
 
-                <Text  style = {{color:'black',fontSize:14,marginLeft:4,marginTop:4,fontFamily:'Poppins-Regular'}}>
+                <Text  style = {{color:'black',fontSize:14,marginLeft:4,marginTop:4,fontFamily:'Poppins-Regular', width:'80%'}}>
                     {item.name}
 
                 </Text>
@@ -748,29 +750,45 @@ var s = item.path + item.image
 
 
 
+                    {this.state.results.length==0 &&(
+                                          <Text style={{marginLeft : window.width/3,marginTop:10,fontSize : 18,color :'black', height:'auto',fontFamily:'Poppins-Regular',width :'60%',marginBottom:10}}>
+                  Empty cart!
+                    </Text>
 
-                        <FlatList style= {{flexGrow:0,margin:8,}}
+                        )}
+                        {this.state.results.length!=0 && (
+                        <FlatList style= {{flexGrow:0,marginLeft:8, marginTop:8,marginRight:8,marginBottom:70}}
                                   data={this.state.results}
                                   numColumns={1}
                                   keyExtractor = { (item, index) => index.toString() }
                                   renderItem={this._renderItems}
                         />
 
-                    </View>
-                    <View style = {{position:'absolute',bottom:0,flexDirection:'row',width:'100%',backgroundColor:'white',height:50}}>
+                            )}
 
-                        <Text style={{marginLeft : 5,marginTop:10,fontSize : 18,color :'#FF2D00', height:'auto',fontFamily:'Poppins-Regular',width :'60%',}}>
+                    </View>
+
+                    {this.state.results.length == 0 && (
+                        <View style={{height:1}}/>
+                        )}
+                        {this.state.results.length!=0 && (
+
+                    <View style = {{position:'absolute',bottom:0,flexDirection:'row',width:'100%',backgroundColor:'white',height:50, justifyContent:'space-between'}}>
+
+                        <Text style={{marginTop:10,fontSize : 18,color :'#FF2D00', height:'auto',fontFamily:'Poppins-Regular',width :'60%',marginLeft:10}}>
 
                             ₹{this.state.prices}/-
                         </Text>
 
                         <Button
-                            style={{padding:4,fontSize: 14,marginTop:10, color: 'white',backgroundColor:'#0592CC',marginLeft:'5%',width:100,height:30,fontFamily:'Poppins-Medium',borderRadius:4}}
+                            style={{padding:4,fontSize: 14,marginTop:10, color: 'white',backgroundColor:'#0592CC',width:100,height:30,fontFamily:'Poppins-Medium',borderRadius:4,marginRight:10}}
                             styleDisabled={{color: 'red'}}
                             onPress={() => this.login()}>
                             CHECKOUT
                         </Button>
                     </View>
+
+                            )}
 
 
 

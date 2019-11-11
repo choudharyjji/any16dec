@@ -229,42 +229,85 @@ export default class AppointmentResc extends Component {
 
 
 
-    calculateDay(date){
+calculateDay(date){
 
 
-        const url = GLOBAL.BASE_URL +  'common_time'
 
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+        if (GLOBAL.appointment_details.module == "4" || GLOBAL.appointment_details.module == "5"){
 
 
-            body: JSON.stringify({
+            const url = GLOBAL.BASE_URL + 'common_time_slots_comm'
 
-                "select_date":date,
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
 
-            }),
-        }).then((response) => response.json())
-            .then((responseJson) => {
+
+                body: JSON.stringify({
+
+                    "select_date": date,
+                    "for_time":GLOBAL.appointment_details.online_type,
+                    "id":GLOBAL.appointment_details.doctor_id
+
+
+                }),
+            }).then((response) => response.json())
+                .then((responseJson) => {
 
 //                alert(JSON.stringify(responseJson))
-                if (responseJson.status == true) {
-                    this.setState({time:responseJson.times})
+                    if (responseJson.status == true) {
+                        this.setState({time: responseJson.slot})
 
 
-                }else{
-                    this.setState({time: []})
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-                this.hideLoading()
-            });
+                    } else {
+                        this.setState({time: []})
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                    this.hideLoading()
+                });
+
+
+
+
+        }else {
+
+            const url = GLOBAL.BASE_URL + 'common_time'
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+
+
+                body: JSON.stringify({
+
+                    "select_date": date,
+
+                }),
+            }).then((response) => response.json())
+                .then((responseJson) => {
+
+//                alert(JSON.stringify(responseJson))
+                    if (responseJson.status == true) {
+                        this.setState({time: responseJson.times})
+
+
+                    } else {
+                        this.setState({time: []})
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                    this.hideLoading()
+                });
+        }
 
     }
-
 
 
     render() {

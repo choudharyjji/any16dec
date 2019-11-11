@@ -534,7 +534,7 @@ export default class OnlineVideo extends Component {
                                 <Image style = {{width :60 ,height :60,margin:10,resizeMode:'contain'}}
                                        source={require('./myself.png')}/>
 
-                                <Text style = {{color:'black',font:'Poppins-Medium',textAlign:'center'}}>
+                                <Text style = {{color:'black',fontFamily:'Poppins-Medium',textAlign:'center'}}>
                                     Self
 
                                 </Text>
@@ -557,7 +557,7 @@ export default class OnlineVideo extends Component {
                                     <Image style = {{width :60 ,height :60,margin:10,resizeMode:'contain'}}
                                            source={require('./add.png')}/>
 
-                                    <Text style = {{color:'black',font:'Poppins-Medium',textAlign:'center'}}>
+                                    <Text style = {{color:'black',fontFamily:'Poppins-Medium',textAlign:'center'}}>
                                         Add
 
                                     </Text>

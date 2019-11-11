@@ -113,7 +113,7 @@ export default class EquipmentAddress extends Component {
 
                 if (responseJson.status == true) {
 
-                    GLOBAL.price = responseJson.price
+                  //  GLOBAL.price = responseJson.price
 
                     // this.props.navigation.navigate("VideoCall", {
                     //     channelName: 'Picasoid',

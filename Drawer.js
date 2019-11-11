@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 import {NavigationActions,StackActions} from 'react-navigation';
 import PropTypes from 'prop-types';
 import {ScrollView, Text, View ,Linking,AsyncStorage,    StyleSheet,Share,
-Image,TouchableOpacity,Alert,} from 'react-native';
+Image,TouchableOpacity,Alert,TouchableNativeFeedback} from 'react-native';
 import { DrawerActions } from 'react-navigation-drawer';
 
+import moment from 'moment';
 
 
 const GLOBAL = require('./Global');
@@ -119,6 +120,10 @@ navigateToScreen1 = (route) => () => {
 
 
     selectedFirst = (index) => ()=>{
+      GLOBAL.date=moment()
+        GLOBAL.time=''
+        GLOBAL.selectedAddress=[]
+        GLOBAL.price=''
         if (index == 0){
             this.props.navigation.navigate('DoctorVisit')
         }else if (index == 1){
@@ -156,6 +161,7 @@ navigateToScreen1 = (route) => () => {
         <ScrollView>
           <View style={{backgroundColor:'#0592CC',}}>
 
+
             <View  style={styles.headertop}>
 
             <View style={{marginTop:30, marginLeft:20, flexDirection: 'column'}}>
@@ -169,9 +175,20 @@ navigateToScreen1 = (route) => () => {
           {GLOBAL.myemail}
          </Text>
 </View>
+
+<TouchableNativeFeedback onPress={()=> this.props.navigation.navigate('EditProfile')}>
+        <View style={{marginTop:30,padding:5, height:25, overflow:'hidden', borderRadius:15,marginLeft:10,    borderWidth: 2,width:120,marginBottom:10,
+    borderColor:'white' ,backgroundColor: '#0592CC', flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+
+      <Text style={{fontSize:10, color:'white',fontFamily:'Poppins-Medium',alignSelf:'center' }}>Edit Profile</Text>
+
+    </View>
+    </TouchableNativeFeedback>
+
 </View>
 
             </View>
+
 
 
              <View style={styles.menuItem}>
@@ -203,7 +220,7 @@ navigateToScreen1 = (route) => () => {
 
             <Text style = {styles.drawerTexts}
               onPress={this.selectedFirst(0)}>
-              Doctor@ Doorstep
+              Doctor at Doorstep
               </Text>
             </View>
 
@@ -213,7 +230,7 @@ navigateToScreen1 = (route) => () => {
 
             <Text style = {styles.drawerTexts}
               onPress={this.selectedFirst(1)}>
-              Nursing Care@ Home
+              Nursing Care at Home
               </Text>
             </View>
 
@@ -222,7 +239,7 @@ navigateToScreen1 = (route) => () => {
 
             <Text style = {styles.drawerTexts}
               onPress={this.selectedFirst(2)}>
-              Medical Services@ Doorstep
+              Medical Services at Doorstep
               </Text>
             </View>
 
@@ -240,7 +257,7 @@ navigateToScreen1 = (route) => () => {
 
             <Text style = {styles.drawerTexts}
               onPress={this.selectedFirst(4)}>
-              Doctor Appointment@ Clinic
+              Doctor Appointment at Clinic
               </Text>
             </View>
 
@@ -346,7 +363,7 @@ navigateToScreen1 = (route) => () => {
                <Image style={styles.drawericon}
                            source={require('./drawer/d_my_order.png')} />
            <Text style = {styles.drawerTexts}
-            onPress={this.navigateToScreen('Appointment')}>
+            onPress={this.navigateToScreen('History')}>
             My Order
             </Text>
           </View>
@@ -379,7 +396,7 @@ navigateToScreen1 = (route) => () => {
               <Image style={styles.drawericon}
                           source={require('./drawer/d_about.png')} />
           <Text style = {styles.drawerTexts}
-           onPress={()=>Linking.openURL('http://anytimedoc.in/')}>
+           onPress={()=>this.props.navigation.navigate('AboutUs')}>
            About Us
            </Text>
          </View>
@@ -412,7 +429,7 @@ navigateToScreen1 = (route) => () => {
                <Image style={styles.drawericon}
                            source={require('./drawer/d_tc.png')} />
            <Text style = {styles.drawerTexts}
-            onPress={()=>Linking.openURL('http://anytimedoc.in/')}>
+            onPress={this.navigateToScreen('Terms')}>
             Terms & Conditions
             </Text>
           </View>
@@ -437,6 +454,17 @@ navigateToScreen1 = (route) => () => {
             Refer and Earn
             </Text>
           </View>
+
+
+              <View style={styles.menuItem}>
+
+                            <Image style={styles.drawericon}
+                                   source={require('./drawer/d_tc.png')} />
+                            <Text style = {styles.drawerTexts}
+                                  onPress={this.navigateToScreen('NurseHistory')}>
+                                Nurse History
+                            </Text>
+              </View>
 
            <View style={styles.menuItem}>
 

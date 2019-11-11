@@ -227,6 +227,8 @@ export default class Pharmacy extends Component {
                 if (responseJson.status == true) {
 
                   alert('Your Order Placed Successfully.')
+                  this.props.navigation.goBack()
+
                 } else {
 
 

@@ -17,6 +17,7 @@ import {
 const GLOBAL = require('./Global');
 import Button from 'react-native-button';
 const window = Dimensions.get('window');
+var validator = require("email-validator");
 
 import { TextField } from 'react-native-material-textfield';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
@@ -40,7 +41,7 @@ export default class AddMember extends Component {
             relation:'',
             gender:'',
             dob:'',
-            value:'',
+            value:0,
 
         };
 
@@ -152,48 +153,73 @@ export default class AddMember extends Component {
     componentDidMount(){
         //   this._handlePressLogin()
     }
-    _handlePress() {
+_handlePress() {
+        var type;
+        if (this.state.value == 0){
+            type = "Male"
+        }else{
+            type = "Female"
+        }
 
-        const url = GLOBAL.BASE_URL +  'add_member'
+        if (this.state.name == ''){
+            alert('Please enter name')
 
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+        }else if (this.state.email == ''){
+            alert('Please enter email')
 
+        }else if (validator.validate(this.state.email) == false){
+            alert('Please enter Valid email')
+        }
 
-            body: JSON.stringify({
-                "user_id":GLOBAL.user_id,
-                "member_name":this.state.name,
-                "member_email":this.state.email,
-                "member_mobile":this.state.mobile,
-                "member_relation":this.state.relation,
-                "member_dob":this.state.dob,
-                "gender":'male',
+        else if (this.state.mobile == ''){
+            alert('Please enter mobile')
 
+        }else if (this.state.relation == ''){
+            alert('Please enter relation')
 
-
-
-
-            }),
-        }).then((response) => response.json())
-            .then((responseJson) => {
-
-
-                if (responseJson.status == true) {
-                   alert('Member Add Successfully')
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-                this.hideLoading()
-            });
+        }else if (this.state.dob == ''){
+            alert('Please enter dob')
+        }else {
 
 
+            const url = GLOBAL.BASE_URL + 'add_member'
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+
+
+                body: JSON.stringify({
+                    "user_id": GLOBAL.user_id,
+                    "member_name": this.state.name,
+                    "member_email": this.state.email,
+                    "member_mobile": this.state.mobile,
+                    "member_relation": this.state.relation,
+                    "member_dob": this.state.dob,
+                    "gender": type,
+
+
+                }),
+            }).then((response) => response.json())
+                .then((responseJson) => {
+
+
+                    if (responseJson.status == true) {
+                        this.props.navigation.goBack()
+                        alert('Member Added Successfully')
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                    this.hideLoading()
+                });
+
+        }
 
     }
-
+    
     login = () => {
         this.props.navigation.navigate('NurseTime')
     }
@@ -324,6 +350,8 @@ export default class AddMember extends Component {
                                 <TextField
                                     label= 'Mobile'
                                     value={mobile}
+                                    keyboardType={'numeric'}
+                                    maxLength={10}
                                     onChangeText={ (mobile) => this.setState({ mobile }) }
                                     tintColor = {'#0592CC'}
                                 />
@@ -354,6 +382,7 @@ export default class AddMember extends Component {
                                 <TextField
                                     label= 'Date of Birth'
                                     value={dob}
+                                    placeholder={'yy-mm-dd'}
                                     onChangeText={ (dob) => this.setState({ dob }) }
                                     tintColor = {'#0592CC'}
                                 />

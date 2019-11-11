@@ -6,7 +6,7 @@ import {
     View,
     Image,
     Alert,
-
+    ScrollView,
     FlatList,
     Dimensions,
     TouchableOpacity,
@@ -93,7 +93,21 @@ export default class AboutUs extends Component {
         }
         return (
 
-<WebView source={{ uri: 'https://www.anytimedoc.in' }} />
+            <ScrollView style={styles.container}>
+
+                <Text style = {{fontSize:20,margin:10,fontFamily:'Poppins-Medium',color:'#0592CC',textAlign:'left',width:'100%'}}>
+                    About Us
+
+                </Text>
+
+                <Text style = {{fontSize:17,marginLeft:10,marginRight:10,marginBottom:10,fontFamily:'Poppins-Medium',color:'black',textAlign:'left',width:'90%'}}>
+                    Company is providing 24 X 7 health care services
+                    Anytimedoc App is designed with different verticals as 24x7 online consultation for all age groups patients by highly qualified & experienced doctors over video conferencing, mobile app chat and Audio call, 24 x 7 emergency doctor assistance at home within 30minutes, Nursing care at home with highly qualified / trained Para-medical staff, Clinic appointment bookings for nearby doctors, Medical ICU care at home with CMS (Centralized Monitoring System) by highly experienced doctors, E-lab for all type pathology investigations, Ambulance Services at doorstep within 30minutes, Elderly care at home, Medical Equipments available on rental or for sale. Anytimedoc team is dedicatedly working 24X7 to manage all medical emergencies in Delhi/NCR and rapidly scaling to provide best services to millions.
+
+                </Text>
+
+
+            </ScrollView>
         );
     }
 }

@@ -185,7 +185,7 @@ export default class HospitalFilter extends Component {
                 });
 
         } else{
-            this.setState({results:res[0].array})
+            this.setState({results:res.array})
         }
 
 
@@ -220,7 +220,7 @@ export default class HospitalFilter extends Component {
 
 
 
-        store.push("hospital", dict);
+        store.update("hospital", dict);
         //GLOBAL.department = this.state.results
         this.props.navigation.goBack()
     }

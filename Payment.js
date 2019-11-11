@@ -140,7 +140,7 @@ class Payment extends React.Component{
     capture = (a,s) =>{
 //https://rzp_test_26ccbdbfe0e84b:69b2e24411e384f91213f22a@api.razorpay.com/v1/payments/pay_29QQoUBi66xm2f/capture
 
-        var commonHtml = `https://rzp_test_CDbzQjcE3QD5L3:ipNPnUwhDwPkIjNfyngYOzju@api.razorpay.com/v1/payments/${a}/capture`;
+        var commonHtml = `https://rzp_live_P4iqckoSRdday1:XEAPO8kUokmnHZtHYrQZw9ZS@api.razorpay.com/v1/payments/${a}/capture`;
 
 
 
@@ -176,9 +176,9 @@ class Payment extends React.Component{
 
         var options = {
             description: ss,
-            image: require('./loginlogo.png'),
+            image: {uri :require('./loginlogo.png')},
             currency: 'INR',
-            key: 'rzp_test_CDbzQjcE3QD5L3',
+            key: 'rzp_live_P4iqckoSRdday1',
             amount:b,
 
             name: GLOBAL.myname,
@@ -187,7 +187,7 @@ class Payment extends React.Component{
                 contact: GLOBAL.mymobile,
                 name: GLOBAL.myname
             },
-            theme: {color: '#F37254'}
+            theme: {color: '#0592CC'}
         }
 
         RazorpayCheckout.open(options).then((data) => {
@@ -1688,7 +1688,7 @@ return;
 
 
                     <Button
-                        style={{padding:4,marginTop:40,fontSize: 20, color: 'white',backgroundColor:'#0592CC',marginLeft:'5%',width:'90%',height:40,fontFamily:'Poppins-Medium',borderRadius:4}}
+                        style={{padding:4,marginTop:40,marginBottom:10,fontSize: 20, color: 'white',backgroundColor:'#0592CC',marginLeft:'5%',width:'90%',height:40,fontFamily:'Poppins-Medium',borderRadius:4}}
                         styleDisabled={{color: 'red'}}
                         onPress={() => this.finalPay()}>
                        SUBMIT
