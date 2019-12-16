@@ -171,30 +171,14 @@ copytoclipboard = async () => {
 
          <Text style={{fontSize:21,fontFamily:'Ubuntu-Regular',marginTop:25,marginLeft:25,color:'#385C8E'}}>Share Via</Text>
 
-         <View style={{flexDirection:'row',marginTop:20,marginLeft:27,alignItems:'center'}}>
+         <View style={{flexDirection:'row',marginTop:20,width:'100%', justifyContent:'center'}}>
 
          <TouchableOpacity onPress={()=>this._fancyShareMessage()}>
-         <Image source={require('./referlogo2.png')}
-          style={{ height:60,width:60,resizeMode:'contain'}} />
+         <Image source={require('./share_r.png')}
+          style={{ height:50,width:50,resizeMode:'contain'}} />
          </TouchableOpacity>
 
-         <TouchableOpacity onPress={()=>this._fancyShareMessage()}>
-          <Image source={require('./referlogo3.png')}
-           style={{ height:60,width:60,resizeMode:'contain',marginLeft:33}} />
-        </TouchableOpacity>
-
-         <TouchableOpacity onPress={()=>this._fancyShareMessage()}>
-          <Image source={require('./referlogo4.png')}
-           style={{ height:60,width:60,resizeMode:'contain',marginLeft:33}} />
-          </TouchableOpacity>
-
-         <TouchableOpacity onPress={()=>this._fancyShareMessage()}>
-          <Image source={require('./referlogo5.png')}
-           style={{ height:60,width:60,resizeMode:'contain',marginLeft:33}} />
-        </TouchableOpacity>
-
          </View>
-
          <TouchableOpacity style={{alignSelf:'center',marginTop:25}}
          onPress={()=> this.props.navigation.goBack()}>
          <Image source={require('./referlogo6.png')}

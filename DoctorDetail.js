@@ -186,7 +186,7 @@ export default class DoctorDetail extends Component {
         return (
 
             <View style={styles.container}>
-                <Image style={{width:window.width, height:250, resizeMode:'cover'}} source={require('./treat.png')}/>
+                <Image style={{width:window.width, height:250, backgroundColor:'#0592CC'}} />
                 <View style={{backgroundColor:'transparent',color :'white',flexDirection:'row' , flex: 1 ,margin: 10, shadowColor: '#000',
                     shadowOffset: { width: 0, height: 1 },
                     shadowOpacity: 0.6,

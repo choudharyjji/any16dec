@@ -1396,7 +1396,7 @@ return;
 
 
                         const url = GLOBAL.BASE_URL + 'add_temporary_booking'
-
+//                        alert(GLOBAL.date)
                         fetch(url, {
                             method: 'POST',
                             headers: {

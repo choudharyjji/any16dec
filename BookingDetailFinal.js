@@ -110,6 +110,7 @@ export default class BookingDetailFinal extends Component {
         var t = new Date( date );
         var s = moment(t).format('YYYY-MM-DD')
         GLOBAL.date = s
+//        alert(GLOBAL.date)
         this.calculateDay(s)
     }
     componentDidMount(){

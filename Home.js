@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import { StyleSheet,Text,TextInput, View,Image ,Alert,ScrollView,FlatList,Dimensions ,PermissionsAndroid,TouchableOpacity,TouchableNativeFeedback,ActivityIndicator,Linking} from 'react-native';
 const window = Dimensions.get('window');
 import Button from 'react-native-button';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+
 
 import Geolocation from 'react-native-geolocation-service';
 import Geolocations from '@react-native-community/geolocation';
@@ -179,6 +181,7 @@ export default class Home extends Component {
         GLOBAL.bookingid = res.chat_g_id
         GLOBAL.mybookingid = res.booking_id
         GLOBAL.emergency_number = res.emergency_number
+//        GLOBAL.profileImage = res.user_detail.image
         booking_type = res.booking_type
 
         this.setState({isok:res.is_booking})
@@ -189,6 +192,51 @@ export default class Home extends Component {
         this.setState({package:res.package})
 
     }
+
+        getNewsUpdate(){
+
+        const url = GLOBAL.BASE_URL +  'get_profile'
+
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user_id : GLOBAL.user_id,
+
+            }),
+        }).then((response) => response.json())
+            .then((responseJson) => {
+//                alert(JSON.stringify(responseJson))
+                if (responseJson.status == true) {
+
+
+
+                    // this.setState({name :responseJson.user_details.name})
+                    // this.setState({address: responseJson.user_details.address})
+                    // this.setState({area: responseJson.user_details.area})
+                    // this.setState({city: responseJson.user_details.city})
+                    // this.setState({description :responseJson.user_details.email})
+                    // this.setState({image :responseJson.user_details.image})
+                    // this.setState({username: responseJson.user_details.username})
+                    // if(responseJson.user_details.dob==''){
+                    //     this.setState({dob:'Select Date of Birth'})
+                    // }else{
+                    //     this.setState({dob: responseJson.user_details.dob})
+                    // }
+                    GLOBAL.profileImage = responseJson.user_details.image
+                }else {
+                    alert('No News Found')
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+    }
+
 
     call1 = ()=>{
         const url = GLOBAL.BASE_URL +  'get_check_chat_flag'
@@ -227,6 +275,8 @@ export default class Home extends Component {
     }
     _handleStateChange = state =>{
 //        alert(GLOBAL.user_id)
+
+    this.getNewsUpdate()
         Geolocation.getCurrentPosition(
             (position) => {
                 this.getlog(position)
@@ -434,7 +484,7 @@ export default class Home extends Component {
                                 containerStyle={{height:25,width:183,backgroundColor:'white',overflow:'hidden',marginLeft:5,borderRadius:3,borderWidth:1,borderColor:'#D3D3D3',justifyContent:'center'}}
                                 disabled={true}>
                             <Text style={{fontSize:12,color:'#808080',fontFamily:'Poppins-Regular',marginLeft:3}}>Recomended for:</Text>
-                            {item.recommed_for}
+                            {item.recommed_for} {item.recommand_for}  
                         </Button>
 
                         <Button style={{fontSize:12,color:'black',fontFamily:'Poppins-Regular',marginRight:40}}
@@ -574,7 +624,7 @@ export default class Home extends Component {
 
 
         return (
-            <TouchableOpacity onPress={() => this.selectedFirstsd(itemData.item.title)
+            <TouchableNativeFeedback onPress={() => this.selectedFirstsd(itemData.item.title)
             }>
                 <View   style  = {{width:window.width/2.2 - 8,margin:4, height:200,backgroundColor:'white',shadowColor: "#000",
                     shadowOffset: {
@@ -595,13 +645,13 @@ export default class Home extends Component {
 
                     />
 
-                    <Text style = {{fontSize:15,margin:1,fontFamily:'Poppins-Medium',color:'#0592CC',textAlign:'center',width:window.width/2.2 - 8}}>
+                    <Text style = {{fontSize:12.5,margin:1,fontFamily:'Poppins-Medium',color:'#0592CC',textAlign:'center',width:window.width/2.2 - 8, alignSelf:'center'}}>
                         {itemData.item.title}
 
                     </Text>
 
                 </View>
-            </TouchableOpacity>
+            </TouchableNativeFeedback>
 
         )
     }
@@ -616,7 +666,7 @@ export default class Home extends Component {
                         height: 2,
                     },
                     shadowOpacity: 0.25,
-                    shadowRadius: 3.84,elevation:5
+                    shadowRadius: 3.84,elevation:5, flexDirection:'column',alignItems:'center', justifyContent:'center'
                 }}
                 >
 
@@ -624,7 +674,7 @@ export default class Home extends Component {
 
 
                     <Image source={itemData.item.image}
-                           style  = {{width:45, height:45,marginTop: 3,alignSelf:'center',marginLeft:5,resizeMode:'contain'
+                           style  = {{width:45, height:45,alignSelf:'center',marginLeft:5,resizeMode:'contain'
                            }}
 
                     />
@@ -701,12 +751,12 @@ call = () =>{
 
                         </Text>
                         </TouchableOpacity>
-                        <View style = {{flexDirection:'row',width:'22%'}}>
+                        <View style = {{flexDirection:'row', marginRight:10}}>
                         {this.state.isok==1 &&(
                           <TouchableOpacity onPress={() => this.call()
                             }>
-                            <Image source={require('./call.png')}
-                                   style  = {{width:25, height:25,marginLeft:10,resizeMode:'contain'
+                            <Image source={require('./video_chat.png')}
+                                   style  = {{width:27, height:27,resizeMode:'contain', marginLeft:10, marginRight:10
                                    }}
 
                             />
@@ -723,7 +773,7 @@ call = () =>{
                             <TouchableOpacity onPress={() => this.calls()
                             }>
                             <Image source={require('./call.png')}
-                                   style  = {{width:25, height:25,marginLeft:20,resizeMode:'contain'
+                                   style  = {{width:25, height:25,marginLeft:10,resizeMode:'contain'
                                    }}
 
                             />

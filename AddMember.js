@@ -46,39 +46,11 @@ export default class AddMember extends Component {
         };
 
     }
-    myCallbackFunction = (res) => {
-        this.hideLoading()
-        this.setState({data:res.role})
-        this.setState({loading: false})
-    }
+
     componentWillUnmount() {
 
     }
 
-    myCallbackFunctions = (res) => {
-        this.hideLoading()
-        GLOBAL.mobile =  this.state.phone
-        if (res.status == 200){
-            GLOBAL.which = "2"
-
-            GLOBAL.userID = res.user_id.toString();
-            GLOBAL.name = res.name;
-            GLOBAL.mobile =  res.mobile;
-            AsyncStorage.setItem('mobile', res.mobile);
-            AsyncStorage.setItem('userID', res.user_id);
-            AsyncStorage.setItem('username', res.name);
-
-
-            this.props.navigation.navigate('Otp')
-        }
-        else if (res.status == 201){
-            this.setState({visible:true})
-        }
-        else{
-            alert(stringsoflanguages.unable)
-        }
-
-    }
     static navigationOptions = ({ navigation }) => {
         return {
             //   header: () => null,
@@ -95,20 +67,7 @@ export default class AddMember extends Component {
             }
         }
     }
-    _handlePressLogin() {
-        this.showLoading()
-        var self=this;
-        var url = GLOBAL.BASE_URL + 'getrole';
-        axios.get(url)
-            .then(function (response) {
-                self.myCallbackFunction(response.data)
-            })
-            .catch(function (error) {
-                console.log(error);
 
-            });
-
-    }
 
 
     showLoading() {
@@ -119,35 +78,10 @@ export default class AddMember extends Component {
     hideLoading() {
         this.setState({loading: false})
     }
-    getSelection = (index) => {
 
 
 
-        for(let i = 0; i < 2; i++){
 
-            this.state.moviesList[i].selected = "";
-
-        }
-
-        this.setState({moviesList:this.state.moviesList})
-
-        let indexs = this.state.moviesList;
-        let targetPost = this.state.moviesList[index];
-        if (targetPost.selected == ''){
-            targetPost.selected = 'Y'
-        }else{
-            targetPost.selected = ''
-        }
-        indexs[index] = targetPost
-        this.setState({moviesList:indexs})
-
-
-    }
-
-
-    showLoading() {
-        this.setState({loading: true})
-    }
 
 
     componentDidMount(){
@@ -227,10 +161,7 @@ _handlePress() {
     check = () => {
         this.setState({isSecure :!this.state.isSecure})
     }
-    getSelection = () => {
-        alert('dd')
-        this.setState({selected:true})
-    }
+
     selectedFirst = (indexs) => {
 
         this.props.navigation.navigate('BookingAppointmentDetail')

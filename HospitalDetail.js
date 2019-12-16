@@ -181,7 +181,7 @@ export default class HospitalDetail extends Component {
         return (
 
             <View style={styles.container}>
-                <Image style={{width:window.width, height:200, resizeMode:'cover'}} source={require('./treat.png')}/>
+                <Image style={{width:window.width, height:250, backgroundColor:'#0592CC'}} />
 
                 <ScrollView style={styles.container} >
                     <View style={{flexDirection:'column'}}>

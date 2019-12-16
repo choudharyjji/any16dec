@@ -212,11 +212,11 @@ componentDidMount(){
 
 
                     if (responseJson.status == true) {
-                        this.props.navigation.navigate('EquipmentCart')
+                        this.props.navigation.replace('EquipmentCart')
                         alert('Equipment added to Cart Successfully!')
 
                     } else {
-                        alert('Please delete cart')
+                        alert('Equipment already in cart')
                     }
                 })
                 .catch((error) => {
@@ -251,10 +251,10 @@ componentDidMount(){
 
 
                     if (responseJson.status == true) {
-                        this.props.navigation.navigate('EquipmentCart')
+                        this.props.navigation.replace('EquipmentCart')
 
                     } else {
-                        alert('Please clear cart')
+                        alert('Equipment already in cart')
                     }
                 })
                 .catch((error) => {
@@ -262,7 +262,7 @@ componentDidMount(){
                 });
         }
 
-        // this.props.navigation.navigate('BasicDetail')
+
     }
     dates = (date)=>{
         var t = new Date( date );
@@ -468,7 +468,7 @@ componentDidMount(){
                             )}
                             {GLOBAL.medicalEquipment.add_in_cart_status == 1 && (
                                 <Button style={{fontSize:17,color:'white',fontFamily:'Poppins-Regular'}}
-                                        onPress={() => this.props.navigation.navigate('EquipmentCart')}
+                                        onPress={() => this.props.navigation.replace('EquipmentCart')}
                                         containerStyle={{height:45,width:135,borderRadius:6,elevation:1,justifyContent:'center',backgroundColor:'#0592CC'}}>
                                     GO to cart
 

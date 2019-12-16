@@ -141,7 +141,7 @@ navigateToScreen1 = (route) => () => {
         }else if (index == 7){
             this.props.navigation.navigate('LabHistory')
         }else if (index == 8){
-            this.props.navigation.navigate('MedicalEquipment')
+            this.props.navigation.navigate('PurchaseType')
         }else if (index == 9){
             this.props.navigation.navigate('OpdHealth')
         }else if (index == 10){
@@ -168,6 +168,9 @@ navigateToScreen1 = (route) => () => {
 
 
 <View style={{flexDirection:'column', marginTop:5,}}>
+
+    <Image style={{width:70, height:70, borderRadius:35, marginLeft:10}}
+    source={{uri: GLOBAL.profileImage}}/>
          <Text style = {{marginTop:10,color : 'white',marginLeft : 10,fontSize: 17, height:'auto',fontFamily:'Poppins-Regular'}} >
           {GLOBAL.myname}
          </Text>
@@ -515,7 +518,7 @@ const styles = StyleSheet.create({
 headertop :{
 
     width : 300,
-   height : 180,
+   height : 230,
     backgroundColor : '#0592CC',
     flexDirection:'column'
   } ,

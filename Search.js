@@ -460,7 +460,7 @@ export default class Search extends Component {
                             </View>
 
                             <View style = {{flexDirection:'row'}}>
-                                <Text style={{marginLeft : 5,fontSize : 12,color :'#8F8F8F',height:40,fontFamily:'Poppins-Medium',width :'50%'}}>
+                                <Text style={{marginLeft : 5,fontSize : 12,color :'#8F8F8F',height:'auto',fontFamily:'Poppins-Medium',width :'80%'}}>
 
                                     {speciality}
                                 </Text>
@@ -475,7 +475,7 @@ export default class Search extends Component {
                                 <Image style = {{width :20 ,height :20,resizeMode:'contain'}}
                                        source={require('./location.png')}/>
 
-                                <Text style={{marginLeft : 5,width:window.width - 150,height:30,fontSize : 12,color :'#8F8F8F',fontFamily:'Poppins-Medium',}}>
+                                <Text style={{marginLeft : 5,width:window.width - 150,height:'auto',fontSize : 12,color :'#8F8F8F',fontFamily:'Poppins-Medium',}}>
 
                                     Branch: {item.lat_long_address}
                                 </Text>

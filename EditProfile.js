@@ -27,6 +27,8 @@ const options = {
         path: 'images',
     },
 };
+import DateTimePicker from '@react-native-community/datetimepicker';
+
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 type Props = {};
 export default class EditProfile extends Component {
@@ -48,7 +50,9 @@ export default class EditProfile extends Component {
         states:'',
         results: [],
         avatarSource:'',
-        image :'',username:''
+        image :'',username:'', date:new Date('2020-06-12T14:42:42'),
+    mode: 'date',
+    show: false,
 
     };
 
@@ -70,7 +74,28 @@ export default class EditProfile extends Component {
         }
     }
 
+  setDate = (event, date) => {
+    const formattedDate = `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
+//    alert(formattedDate)
 
+    //date = date || this.state.date;
+    this.setState({dob :formattedDate})
+    // this.setState({
+    //   show: Platform.OS === 'ios' ? true : false,
+    //   date,
+    // });
+  }
+ 
+  show = mode => {
+    this.setState({
+      show: true,
+      mode,
+    });
+  }
+ 
+  datepicker = () => {
+    this.show('date');
+  }
 
     showLoading() {
         this.setState({loading: true})
@@ -92,7 +117,7 @@ export default class EditProfile extends Component {
             }),
         }).then((response) => response.json())
             .then((responseJson) => {
-
+//                alert(JSON.stringify(responseJson))
                 if (responseJson.status == true) {
 
 
@@ -104,6 +129,11 @@ export default class EditProfile extends Component {
                     this.setState({description :responseJson.user_details.email})
                     this.setState({image :responseJson.user_details.image})
                     this.setState({username: responseJson.user_details.username})
+                    if(responseJson.user_details.dob==''){
+                        this.setState({dob:'Select Date of Birth'})
+                    }else{
+                        this.setState({dob: responseJson.user_details.dob})
+                    }
                     GLOBAL.profileImage = responseJson.user_details.image
                 }else {
                     alert('No News Found')
@@ -218,10 +248,7 @@ export default class EditProfile extends Component {
 
 
 
-    componentWillMount() {
-        this.getNewsUpdate()
 
-    }
 
     componentWillUnmount() {
 
@@ -243,12 +270,14 @@ export default class EditProfile extends Component {
     }
 
     componentDidMount(){
-        this.props.navigation.addListener('willFocus',this._handleStateChange);
+        this.getNewsUpdate()
+//        this.props.navigation.addListener('willFocus',this._handleStateChange);
         this.setState({newsHeading:GLOBAL.array})
     }
 
 
     render() {
+    const { show, date, mode } = this.state;
 
 
         return (
@@ -313,6 +342,25 @@ export default class EditProfile extends Component {
                             onChangeText={(text) => this.setState({address:text})}
                         />
 
+                        <TouchableOpacity onPress={()=>this.datepicker()}>
+                        <TextInput
+                            style={{ height: 50, borderColor: 'gray',fontSize:20, borderBottomWidth: 1, marginTop:0 ,marginBottom: 20 ,marginLeft:20,width:window.width -40,color:'black' }}
+                            // Adding hint in TextInput using Placeholder option.
+                            value={this.state.dob}
+                            editable={false}
+                            placeholderTextColor = 'grey'
+                            // Making the Under line Transparent.
+                            underlineColorAndroid="transparent"
+                            value = {this.state.dob}
+
+                        />
+                        </TouchableOpacity>
+        { show && <DateTimePicker value={date}
+                    mode={mode}
+                    is24Hour={true}
+                    display="default"
+                    onChange={(event,date)=>this.setDate(event, date)} />
+        }
 
                         <TextInput
                             style={{ height: 50, borderColor: 'gray',fontSize:20, borderBottomWidth: 1, marginTop:0 ,marginBottom: 20 ,marginLeft:20,width:window.width -40,color:'black' }}

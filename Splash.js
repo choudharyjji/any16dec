@@ -55,7 +55,7 @@ proceed=()=>{
     render() {
         return (
             <View style={styles.container}>
-                <Image style = {{width :window.width ,height : window.height}}
+                <Image style = {{width :'100%' ,height : '100%'}}
                        source={require('./splash.png')}/>
 
             </View>

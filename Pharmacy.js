@@ -364,7 +364,7 @@ export default class Pharmacy extends Component {
             .then((responseJson) => {
 
 
-                alert(JSON.stringify(responseJson))
+//                alert(JSON.stringify(responseJson))
 
                 //  this.rajorPay()
                 if (responseJson.status == true) {

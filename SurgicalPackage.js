@@ -169,24 +169,24 @@ export default class SurgicalPackage extends Component {
                     <View style = {{flexDirection:'row',marginBottom:10}}>
 
                         <Button
-                            style={{padding:6,marginTop:'1%',fontSize: 15, color: 'white',backgroundColor:'#0592CC',marginLeft:'5%',width:window.width/2 - 50,height:35,fontFamily:'Poppins-Regular',borderRadius:4}}
+                            style={{padding:6,marginTop:'1%',fontSize: 14.5, color: 'white',backgroundColor:'#0592CC',marginLeft:'5%',width:window.width/2 - 50,height:35,fontFamily:'Poppins-Regular',borderRadius:4}}
                             styleDisabled={{color: 'red'}}
                             onPress={() => this.login(item)}>
-                            For quotation
+                            Upload Prescription
                         </Button>
 
 {item.pdf=='' && (
                         <Button
-                            style={{padding:6,marginTop:'1%',fontSize: 15, color: 'white',backgroundColor:'grey',marginLeft:'5%',width:window.width/2 - 50,height:35,fontFamily:'Poppins-Regular',borderRadius:4}}
+                            style={{padding:6,marginTop:'1%',fontSize: 14.5, color: 'white',backgroundColor:'grey',marginLeft:'5%',width:window.width/2 - 50,height:35,fontFamily:'Poppins-Regular',borderRadius:4}}
                             styleDisabled={{color: 'red'}}
-                            onPress={() => this.logind(item)}>
+                            onPress={() => alert('No quotation found!')}>
                             Get quotation
                         </Button>
 
 )}
 {item.pdf!='' && (
                         <Button
-                            style={{padding:6,marginTop:'1%',fontSize: 15, color: 'white',backgroundColor:'#0592CC',marginLeft:'5%',width:window.width/2 - 50,height:35,fontFamily:'Poppins-Regular',borderRadius:4}}
+                            style={{padding:6,marginTop:'1%',fontSize: 14.5, color: 'white',backgroundColor:'#0592CC',marginLeft:'5%',width:window.width/2 - 50,height:35,fontFamily:'Poppins-Regular',borderRadius:4}}
                             styleDisabled={{color: 'red'}}
                             onPress={() => this.logind(item)}>
                             Get quotation

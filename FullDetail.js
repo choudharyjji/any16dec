@@ -317,7 +317,7 @@ longitudeDelta: LONGITUDE_DELTA,
                     <Image style={{width:20, height:20, resizeMode:'contain', marginTop:3}} source={require('./dhouse.png')}/>
                     <View style={{flexDirection:'column', marginLeft:30}}>
 
-                        <Text style={{fontSize:15, color:'grey'}}>{this.state.results.lat_long_address}</Text>
+                        <Text style={{fontSize:15, color:'grey', width:'40%', marginBottom:5}}>{this.state.results.lat_long_address}</Text>
                         {this.state.noloc == 1 &&(
                         <Text style={{fontSize:15, color:'black', marginTop:5}}>No location added!</Text>
 
